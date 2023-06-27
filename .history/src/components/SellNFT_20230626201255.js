@@ -85,7 +85,7 @@ const SellNFT = () => {
     const tokenId = Number(e.target.tokenId.value);
     if (saleCurrency == 'ETH') {
       // conver price to wei
-      approval = await handleApprove(marketplaceContractAddress, tokenId);
+      approval = handleApprove(marketplaceContractAddress, tokenId);
       const priceInWei = ethers.utils.parseEther(price);
       
       console.log('Selling for ', price, ' ', saleCurrency)

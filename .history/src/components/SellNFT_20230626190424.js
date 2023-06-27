@@ -66,13 +66,11 @@ const SellNFT = () => {
     fetchEvents();
   }, [crazyfacesABI, contractAddress]);
 
-  const handleApprove = async (marketplaceContractAddress, tokenId) => {
+  const handleApprove = async (tokenId) => {
     console.log('handleApprove tokenId: ', tokenId)
-    let approval;
     try {
-      approval = await approve({ args: [marketplaceContractAddress, tokenId] });
-      console.info("contract call successs", approval);
-      return approval;
+      const data = await approve(marketplaceContractAddress, tokenId);
+      console.info("contract call successs", data);
     } catch (err) {
       console.error("contract call failure", err);
     }
@@ -80,25 +78,23 @@ const SellNFT = () => {
 
   const handleListNFTForSale = async (e) => {
     e.preventDefault();
-    let approval;
     const price = e.target.price.value;
     const tokenId = Number(e.target.tokenId.value);
     if (saleCurrency == 'ETH') {
       // conver price to wei
-      approval = await handleApprove(marketplaceContractAddress, tokenId);
+      handleApprove({ args: [marketplaceContract, tokenId] });
       const priceInWei = ethers.utils.parseEther(price);
       
       console.log('Selling for ', price, ' ', saleCurrency)
-      console.log('Selling price in wei: ', priceInWei)
-      if (approval && approval.receipt.status === 1) {
-        try {
-          const data = await createListing({ args: [contractAddress, tokenId, priceInWei] });
-          console.info("contract call successs", data);
-        } catch (err) {
-          console.error("contract call failure", err);
-        }
-    }
-      
+      // const call = async () => {
+      //   try {
+      //     const data = await createListing({ args: [contractAddress, tokenId, priceInWei] });
+      //     console.info("contract call successs", data);
+      //   } catch (err) {
+      //     console.error("contract call failure", err);
+      //   }
+      // }
+      // call();
     } else {
       const price = e.target.price.value;
       console.log('Selling for ', price, ' ', saleCurrency)

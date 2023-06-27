@@ -12,7 +12,6 @@ const SellNFT = () => {
   const [saleCurrency, setSaleCurrency] = useState('ETH');
 
 
-
   const handleSubmit = (e) => {
     e.preventDefault(); // prevent default form submission
     setContractAddress(e.target.contractAddress.value);
@@ -65,46 +64,32 @@ const SellNFT = () => {
 
     fetchEvents();
   }, [crazyfacesABI, contractAddress]);
-
-  const handleApprove = async (marketplaceContractAddress, tokenId) => {
-    console.log('handleApprove tokenId: ', tokenId)
-    let approval;
-    try {
-      approval = await approve({ args: [marketplaceContractAddress, tokenId] });
-      console.info("contract call successs", approval);
-      return approval;
-    } catch (err) {
-      console.error("contract call failure", err);
-    }
-  }
+ 
 
   const handleListNFTForSale = async (e) => {
     e.preventDefault();
-    let approval;
-    const price = e.target.price.value;
-    const tokenId = Number(e.target.tokenId.value);
+    
     if (saleCurrency == 'ETH') {
+      const price = e.target.price.value;
       // conver price to wei
-      approval = await handleApprove(marketplaceContractAddress, tokenId);
       const priceInWei = ethers.utils.parseEther(price);
-      
+      const tokenId = e.target.tokenId.value;
       console.log('Selling for ', price, ' ', saleCurrency)
-      console.log('Selling price in wei: ', priceInWei)
-      if (approval && approval.receipt.status === 1) {
+      const call = async () => {
         try {
           const data = await createListing({ args: [contractAddress, tokenId, priceInWei] });
           console.info("contract call successs", data);
         } catch (err) {
           console.error("contract call failure", err);
         }
-    }
-      
+      }
+      call();
     } else {
       const price = e.target.price.value;
       console.log('Selling for ', price, ' ', saleCurrency)
     }
 
-
+    
 
   }
 
@@ -132,13 +117,13 @@ const SellNFT = () => {
       }</span>
       <div className='sellnft__owned-grid'>
         {ownedNFTs && ownedNFTs.map((tokenId) => {
-
-          return (<ShowOwnedNFTs
-            contractAddress={contractAddress}
-            contract={contract}
-            nftId={tokenId}
-            handleListNFTForSale={handleListNFTForSale}
-            setSaleCurrency={setSaleCurrency}
+          
+          return (<ShowOwnedNFTs 
+            contractAddress={contractAddress} 
+            contract={contract} 
+            nftId={tokenId} 
+            handleListNFTForSale={handleListNFTForSale} 
+            setSaleCurrency={setSaleCurrency} 
           />)
 
         }

@@ -72,7 +72,6 @@ const SellNFT = () => {
     try {
       approval = await approve({ args: [marketplaceContractAddress, tokenId] });
       console.info("contract call successs", approval);
-      return approval;
     } catch (err) {
       console.error("contract call failure", err);
     }
@@ -80,12 +79,11 @@ const SellNFT = () => {
 
   const handleListNFTForSale = async (e) => {
     e.preventDefault();
-    let approval;
     const price = e.target.price.value;
     const tokenId = Number(e.target.tokenId.value);
     if (saleCurrency == 'ETH') {
       // conver price to wei
-      approval = await handleApprove(marketplaceContractAddress, tokenId);
+      handleApprove(marketplaceContractAddress, tokenId);
       const priceInWei = ethers.utils.parseEther(price);
       
       console.log('Selling for ', price, ' ', saleCurrency)
