@@ -1,0 +1,1 @@
+export { default as useFetchNftData } from './useFetchNftData';
