@@ -11,7 +11,8 @@ const BuyNFT = () => {
   const path = location.pathname;
 
   const { 
-    ETHEREUM_NULL_ADDRESS
+    ETHEREUM_NULL_ADDRESS,
+    userWalletAddress 
   } = useEthers();
 
   const {
@@ -19,8 +20,7 @@ const BuyNFT = () => {
   } = useToken();
 
   const {
-    marketplaceContractAddress,
-    marketplaceContract
+    marketplaceContractAddress
   } = useMarketplace();
 
   // Initialize state variables

@@ -3,8 +3,8 @@ import { useEthers, useMarketplace } from '../context';
 
 export const useCheckAuctionCollectSalesCancel = async ( setDisplayButton) => {
 
-    const { userWalletAddress } = useEthers();
-    const { marketplaceContract } = useMarketplace();
+    const{ userWalletAddress } = useEthers();
+    const { marketplaceContract } = useMarketplace;
 
     const [activeSales, setActiveSales] = useState([]);
     const [expiredAuctions, setExpiredAuctions] = useState([]);

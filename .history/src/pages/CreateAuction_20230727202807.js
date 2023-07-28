@@ -105,6 +105,7 @@ const CreateAuction = () => {
                     setDisplayButton={setDisplayButton}
                 />
             )}
+            {displayButton && <AuctionSalesManagementButton setDisplayButton={setDisplayButton} />}
             <h1>LIST YOUR NFT</h1>
             <form onSubmit={handleSubmit} className='auctionNFT__contract-form'>
                 <label>CONTRACT ADDRESS</label>

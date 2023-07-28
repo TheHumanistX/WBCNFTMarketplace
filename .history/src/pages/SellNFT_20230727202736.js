@@ -66,14 +66,14 @@ const SellNFT = () => {
       // convert price to wei
       approval = await handleApprove(marketplaceContractAddress, tokenId);
       try {
-        await listNFT({
-          approval,
-          setTxConfirm,
-          marketplaceContract,
-          nftContractAddress,
-          tokenId,
-          priceInWei,
-          listingCurrency
+        await listNFT({ 
+          approval, 
+          setTxConfirm, 
+          marketplaceContract, 
+          nftContractAddress, 
+          tokenId, 
+          priceInWei, 
+          listingCurrency 
         });
       } catch (err) {
         console.error("contract call failure", err);
@@ -81,15 +81,15 @@ const SellNFT = () => {
     } else {
       approval = await handleApprove(marketplaceContractAddress, tokenId);
       try {
-        await listNFT({
-          approval,
-          setTxConfirm,
-          marketplaceContract,
-          nftContractAddress,
-          tokenContractAddress,
-          tokenId,
-          priceInWei,
-          listingCurrency
+        await listNFT({ 
+          approval, 
+          setTxConfirm, 
+          marketplaceContract, 
+          nftContractAddress, 
+          tokenContractAddress, 
+          tokenId, 
+          priceInWei, 
+          listingCurrency 
         });
       } catch (err) {
         console.error("contract call failure", err);
@@ -98,14 +98,7 @@ const SellNFT = () => {
   }
   return (
     <section className='sellNFT__container'>
-      {displayButton && (
-        <AuctionSalesManagementButton
-          activeSales={activeSales}
-          expiredAuctions={expiredAuctions}
-          wonAuctions={wonAuctions}
-          setDisplayButton={setDisplayButton}
-        />
-      )}
+      {displayButton && <AuctionSalesManagementButton setDisplayButton={setDisplayButton} />}
       <h1>LIST YOUR NFT</h1>
       <form onSubmit={handleSubmit} className='sellNFT__contract-form'>
         <label>CONTRACT ADDRESS</label>

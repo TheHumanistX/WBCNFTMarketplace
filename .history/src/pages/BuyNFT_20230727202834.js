@@ -19,8 +19,7 @@ const BuyNFT = () => {
   } = useToken();
 
   const {
-    marketplaceContractAddress,
-    marketplaceContract
+    marketplaceContractAddress
   } = useMarketplace();
 
   // Initialize state variables

@@ -35,10 +35,8 @@ const CreateAuction = () => {
     const [txConfirm, setTxConfirm] = useState('');
     const [isOpen, setIsOpen] = useState(false);
     const [modalText, setModalText] = useState('');
-    const [createAuctionCheckFailed, setCreateAuctionCheckFailed] = useState(false);
+    const [ createAuctionCheckFailed, setCreateAuctionCheckFailed] = useState(false);
     const [displayButton, setDisplayButton] = useState(false);
-
-    const { activeSales, expiredAuctions, wonAuctions } = useCheckAuctionCollectSalesCancel(setDisplayButton);
 
     console.log('lastNFTMintedId: ', lastNFTMintedId);
     const ownedNFTs = useOwnedNFTs(txConfirm);
@@ -50,10 +48,10 @@ const CreateAuction = () => {
 
     const handleCreateAuction = async (auctionDetails) => {
         console.log('handleCreateAuction initBid: ', auctionDetails.initialBidAmount);
-        if (!await createAuctionInputChecks(auctionDetails, setIsOpen, setModalText)) return;
-
+        if(!await createAuctionInputChecks(auctionDetails, setIsOpen, setModalText)) return;
+     
         let approval;
-
+        
         const tokenId = Number(auctionDetails.tokenId);
         const initBid = auctionDetails.initialBidAmount;
         const bidIncrement = auctionDetails.bidIncrement;
@@ -97,14 +95,7 @@ const CreateAuction = () => {
     // 
     return (
         <section className='auctionNFT__container'>
-            {displayButton && (
-                <AuctionSalesManagementButton
-                    activeSales={activeSales}
-                    expiredAuctions={expiredAuctions}
-                    wonAuctions={wonAuctions}
-                    setDisplayButton={setDisplayButton}
-                />
-            )}
+            {displayButton && <AuctionSalesManagementButton setDisplayButton={setDisplayButton} />}
             <h1>LIST YOUR NFT</h1>
             <form onSubmit={handleSubmit} className='auctionNFT__contract-form'>
                 <label>CONTRACT ADDRESS</label>

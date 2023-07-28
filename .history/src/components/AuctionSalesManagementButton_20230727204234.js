@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { SaleAuctionManagementModal } from './';
+import SaleAuctionManagementModal from './SaleAuctionManagementModal';
 
 const AuctionSalesManagementButton = ({ activeSales, expiredAuctions, wonAuctions, setDisplayButton }) => {
   const [isOpen, setIsOpen] = useState(false);

@@ -153,6 +153,7 @@ const ViewAuctions = () => {
           setDisplayButton={setDisplayButton}
         />
       )}
+      {displayButton && <AuctionSalesManagementButton setDisplayButton={setDisplayButton} />}
       <h1>Bid On An NFT!</h1>
       <div className='buy__owned-flex'>
         {console.log('Entering `liveListings` map function...')}

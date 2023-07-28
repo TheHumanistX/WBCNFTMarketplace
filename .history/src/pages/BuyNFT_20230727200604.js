@@ -10,9 +10,7 @@ const BuyNFT = () => {
   const location = useLocation();
   const path = location.pathname;
 
-  const { 
-    ETHEREUM_NULL_ADDRESS
-  } = useEthers();
+  const { ETHEREUM_NULL_ADDRESS } = useEthers();
 
   const {
     tokenContract,
@@ -20,7 +18,7 @@ const BuyNFT = () => {
 
   const {
     marketplaceContractAddress,
-    marketplaceContract
+    marketplaceContract,
   } = useMarketplace();
 
   // Initialize state variables
@@ -30,7 +28,7 @@ const BuyNFT = () => {
   const [modalText, setModalText] = useState('');
   const [displayButton, setDisplayButton] = useState(false);
 
-  const { activeSales, expiredAuctions, wonAuctions } = useCheckAuctionCollectSalesCancel(setDisplayButton);
+  const { activeSales, expiredAuctions, wonAuctions } = useCheckAuctionCollectSalesCancel(marketplaceContract, userWalletAddress, setDisplayButton);
 
 
   useEffect(() => {
@@ -118,14 +116,7 @@ const BuyNFT = () => {
 
   return (
     <section className='buy__container'>
-      {displayButton && (
-        <AuctionSalesManagementButton
-          activeSales={activeSales}
-          expiredAuctions={expiredAuctions}
-          wonAuctions={wonAuctions}
-          setDisplayButton={setDisplayButton}
-        />
-      )}
+      {displayButton && <AuctionSalesManagementButton setDisplayButton={setDisplayButton} />}
       <h1>Buy An NFT!</h1>
       <div className='buy__owned-flex'>
         {/* {console.log('Entering `liveListings` map function...')} */}

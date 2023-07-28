@@ -485,8 +485,8 @@ header {
   color: #fff;
   font-size: clamp(0.75rem, calc(-1.07rem + 2.14vw), 1.50rem);
   z-index: 50;
-  top: 10vh;
-  right: 2vw;
+  top: 15vh;
+  right: 5vw;
   background-color: rgb(255, 255, 255, 0.05);
   backdrop-filter: blur(3px);
   padding: 10px;

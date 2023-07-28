@@ -33,7 +33,6 @@ const ViewAuctions = () => {
   const [modalText, setModalText] = useState('');
   const [displayButton, setDisplayButton] = useState(false);
 
-  const { activeSales, expiredAuctions, wonAuctions } = useCheckAuctionCollectSalesCancel(setDisplayButton);
 
   useEffect(() => {
     console.log('Entered useEffect in ViewAuctions...')
@@ -145,14 +144,7 @@ const ViewAuctions = () => {
 
   return (
     <section className='buy__container'>
-      {displayButton && (
-        <AuctionSalesManagementButton
-          activeSales={activeSales}
-          expiredAuctions={expiredAuctions}
-          wonAuctions={wonAuctions}
-          setDisplayButton={setDisplayButton}
-        />
-      )}
+      {displayButton && <AuctionSalesManagementButton setDisplayButton={setDisplayButton} />}
       <h1>Bid On An NFT!</h1>
       <div className='buy__owned-flex'>
         {console.log('Entering `liveListings` map function...')}

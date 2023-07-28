@@ -2,12 +2,21 @@ import React, { useState } from 'react';
 import { ethers } from 'ethers';
 import { useEthers, useMarketplace, useNFT, useToken } from '../context'
 import { AlertModal, AuctionSalesManagementButton, ShowOwnedNFTs } from '../components';
-import { useCheckAuctionCollectSalesCancel, useOwnedNFTs } from '../hooks';
+import { useOwnedNFTs } from '../hooks';
 import { listNFT } from '../utility';
 
 
 const SellNFT = () => {
   console.log('SellNFT rendered');
+
+  // const {
+  //   approveNFTTransfer, //! Need to figure out what I am doing with the approve 
+  //   marketplaceNFTListedEvents,
+  //   marketplaceAuctionCreatedEvents,
+  //   nftTransferEvents,
+  // } = useContext(MarketplaceContext);
+
+  // Import necessary context data for this component
 
   const {
     marketplaceContractAddress,
@@ -29,11 +38,11 @@ const SellNFT = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [modalText, setModalText] = useState('');
   const [displayButton, setDisplayButton] = useState(false);
-
-  const { activeSales, expiredAuctions, wonAuctions } = useCheckAuctionCollectSalesCancel(setDisplayButton);
+  // const { mutateAsync: createListing } = useContractWrite(marketplaceContract, "createListing")
 
   const ownedNFTs = useOwnedNFTs(txConfirm);
-
+  // const usersActiveListings = useUsersActiveListings(marketplaceContract, userWalletAddress, marketplaceNFTListedEvents, marketplaceAuctionCreatedEvents);
+  // console.log("usersActiveListings: ", usersActiveListings)
   const handleSubmit = (e) => {
     e.preventDefault(); // prevent default form submission
     setNFTContractAddress(e.target.nftContractAddress.value);
@@ -66,14 +75,14 @@ const SellNFT = () => {
       // convert price to wei
       approval = await handleApprove(marketplaceContractAddress, tokenId);
       try {
-        await listNFT({
-          approval,
-          setTxConfirm,
-          marketplaceContract,
-          nftContractAddress,
-          tokenId,
-          priceInWei,
-          listingCurrency
+        await listNFT({ 
+          approval, 
+          setTxConfirm, 
+          marketplaceContract, 
+          nftContractAddress, 
+          tokenId, 
+          priceInWei, 
+          listingCurrency 
         });
       } catch (err) {
         console.error("contract call failure", err);
@@ -81,15 +90,15 @@ const SellNFT = () => {
     } else {
       approval = await handleApprove(marketplaceContractAddress, tokenId);
       try {
-        await listNFT({
-          approval,
-          setTxConfirm,
-          marketplaceContract,
-          nftContractAddress,
-          tokenContractAddress,
-          tokenId,
-          priceInWei,
-          listingCurrency
+        await listNFT({ 
+          approval, 
+          setTxConfirm, 
+          marketplaceContract, 
+          nftContractAddress, 
+          tokenContractAddress, 
+          tokenId, 
+          priceInWei, 
+          listingCurrency 
         });
       } catch (err) {
         console.error("contract call failure", err);
@@ -98,14 +107,7 @@ const SellNFT = () => {
   }
   return (
     <section className='sellNFT__container'>
-      {displayButton && (
-        <AuctionSalesManagementButton
-          activeSales={activeSales}
-          expiredAuctions={expiredAuctions}
-          wonAuctions={wonAuctions}
-          setDisplayButton={setDisplayButton}
-        />
-      )}
+      {displayButton && <AuctionSalesManagementButton setDisplayButton={setDisplayButton} />}
       <h1>LIST YOUR NFT</h1>
       <form onSubmit={handleSubmit} className='sellNFT__contract-form'>
         <label>CONTRACT ADDRESS</label>

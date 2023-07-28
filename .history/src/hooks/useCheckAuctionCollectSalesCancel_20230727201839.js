@@ -1,17 +1,12 @@
 import { useEffect, useState } from "react"
-import { useEthers, useMarketplace } from '../context';
 
-export const useCheckAuctionCollectSalesCancel = async ( setDisplayButton) => {
-
-    const { userWalletAddress } = useEthers();
-    const { marketplaceContract } = useMarketplace();
+export const useCheckAuctionCollectSalesCancel = async (marketplaceContract, userWalletAddress, setDisplayButton) => {
 
     const [activeSales, setActiveSales] = useState([]);
     const [expiredAuctions, setExpiredAuctions] = useState([]);
     const [wonAuctions, setWonAuctions] = useState([]);
 
     useEffect(() => {
-        if(!marketplaceContract) return;
         const checkAuctionCollectSalesCancel = async () => {
             let lastListingId = await marketplaceContract.idCounter();
             lastListingId = lastListingId.toNumber();
@@ -57,11 +52,8 @@ export const useCheckAuctionCollectSalesCancel = async ( setDisplayButton) => {
             }
 
             setActiveSales(usersActiveSales);
-            console.log('usersActiveSales: ', usersActiveSales)
             setExpiredAuctions(usersExpiredAuctions);
-            console.log('usersExpiredAuctions: ', usersExpiredAuctions)
             setWonAuctions(usersWonAuctions);
-            console.log('usersWonAuctions: ', usersWonAuctions)
             setDisplayButton(usersActiveSales.length > 0 || usersExpiredAuctions.length > 0 || usersWonAuctions.length > 0);
         }
         checkAuctionCollectSalesCancel();

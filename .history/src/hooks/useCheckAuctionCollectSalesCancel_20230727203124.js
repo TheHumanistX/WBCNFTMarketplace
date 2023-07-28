@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react"
-import { useEthers, useMarketplace } from '../context';
+import { useEthers } from '../context';
 
 export const useCheckAuctionCollectSalesCancel = async ( setDisplayButton) => {
 
-    const { userWalletAddress } = useEthers();
-    const { marketplaceContract } = useMarketplace();
+    const{marketplaceContract, userWalletAddress} = useEthers();
 
     const [activeSales, setActiveSales] = useState([]);
     const [expiredAuctions, setExpiredAuctions] = useState([]);

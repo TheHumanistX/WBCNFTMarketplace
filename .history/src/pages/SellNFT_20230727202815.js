@@ -66,14 +66,14 @@ const SellNFT = () => {
       // convert price to wei
       approval = await handleApprove(marketplaceContractAddress, tokenId);
       try {
-        await listNFT({
-          approval,
-          setTxConfirm,
-          marketplaceContract,
-          nftContractAddress,
-          tokenId,
-          priceInWei,
-          listingCurrency
+        await listNFT({ 
+          approval, 
+          setTxConfirm, 
+          marketplaceContract, 
+          nftContractAddress, 
+          tokenId, 
+          priceInWei, 
+          listingCurrency 
         });
       } catch (err) {
         console.error("contract call failure", err);
@@ -81,15 +81,15 @@ const SellNFT = () => {
     } else {
       approval = await handleApprove(marketplaceContractAddress, tokenId);
       try {
-        await listNFT({
-          approval,
-          setTxConfirm,
-          marketplaceContract,
-          nftContractAddress,
-          tokenContractAddress,
-          tokenId,
-          priceInWei,
-          listingCurrency
+        await listNFT({ 
+          approval, 
+          setTxConfirm, 
+          marketplaceContract, 
+          nftContractAddress, 
+          tokenContractAddress, 
+          tokenId, 
+          priceInWei, 
+          listingCurrency 
         });
       } catch (err) {
         console.error("contract call failure", err);

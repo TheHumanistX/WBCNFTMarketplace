@@ -479,15 +479,15 @@ header {
   align-items: center;
   height: 50px;
   width: 300px;
-  border: 2px solid #5142FC;
+  border: 5px solid #5142FC;
   border-radius: 10px;
   cursor: pointer;
   color: #fff;
   font-size: clamp(0.75rem, calc(-1.07rem + 2.14vw), 1.50rem);
   z-index: 50;
-  top: 10vh;
-  right: 2vw;
-  background-color: rgb(255, 255, 255, 0.05);
+  top: 15vh;
+  right: 5vw;
+  background-color: rgb(0, 0, 0, 0.6);
   backdrop-filter: blur(3px);
   padding: 10px;
   box-shadow: inset 3px 3px 5px rgb(255, 255, 255, 0.1), 

@@ -11,7 +11,8 @@ const BuyNFT = () => {
   const path = location.pathname;
 
   const { 
-    ETHEREUM_NULL_ADDRESS
+    ETHEREUM_NULL_ADDRESS,
+    userWalletAddress 
   } = useEthers();
 
   const {
@@ -20,7 +21,7 @@ const BuyNFT = () => {
 
   const {
     marketplaceContractAddress,
-    marketplaceContract
+    marketplaceContract,
   } = useMarketplace();
 
   // Initialize state variables
@@ -30,7 +31,7 @@ const BuyNFT = () => {
   const [modalText, setModalText] = useState('');
   const [displayButton, setDisplayButton] = useState(false);
 
-  const { activeSales, expiredAuctions, wonAuctions } = useCheckAuctionCollectSalesCancel(setDisplayButton);
+  const { activeSales, expiredAuctions, wonAuctions } = useCheckAuctionCollectSalesCancel(marketplaceContract, userWalletAddress, setDisplayButton);
 
 
   useEffect(() => {

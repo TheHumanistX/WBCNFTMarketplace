@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { SaleAuctionManagementModal } from './';
+import SaleAuctionManagementModal from './SaleAuctionManagementModal';
 
 const AuctionSalesManagementButton = ({ activeSales, expiredAuctions, wonAuctions, setDisplayButton }) => {
   const [isOpen, setIsOpen] = useState(false);
-    console.log('AuctionSalesManagementButton rendered, isOpen set to: ', isOpen)
+
   const handleClose = () => {
     setIsOpen(false);
     setDisplayButton(false);  // This line will hide the button after closing the modal.
