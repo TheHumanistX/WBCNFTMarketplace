@@ -36,27 +36,24 @@ export const useCheckAuctionCollectSalesCancel = (setDisplayButton) => {
             for (const listing of listingData) {
                 let currentStatus;
                 let currentOwner;
-                let tokenId;
 
                 if (listing.listingType === 1) { // sale
                     currentStatus = await marketplaceContract.getListingStatus(listing.listingId);
                     currentOwner = (await marketplaceContract.getListing(listing.listingId)).owner;
-                    tokenId = ((await marketplaceContract.getListing(listing.listingId)).tokenID).toNumber();
                 } else if (listing.listingType === 2) { // auction
                     currentStatus = await marketplaceContract.getAuctionStatus(listing.listingId);
                     currentOwner = (await marketplaceContract.getAuction(listing.listingId)).owner;
-                    tokenId = ((await marketplaceContract.getAuction(listing.listingId)).tokenID).toNumber();
                 }
 
                 if (currentOwner === userWalletAddress) {
                     if (listing.listingType === 1 && currentStatus === 1) {
-                        usersActiveSales.push({listingId:listing.listingId, tokenId:tokenId});
+                        usersActiveSales.push(listing.listingId);
                     } else if (listing.listingType === 2 && currentStatus === 3 && (await marketplaceContract.getAuction(listing.listingId)).topBidder === ETHEREUM_NULL_ADDRESS) {
 
-                        usersExpiredAuctions.push({listingId:listing.listingId, tokenId:tokenId});
+                        usersExpiredAuctions.push(listing.listingId);
                     }
                 } else if (currentStatus === 4 && (await marketplaceContract.getAuction(listing.listingId)).topBidder === userWalletAddress) {
-                    usersWonAuctions.push({listingId:listing.listingId, tokenId:tokenId});
+                    usersWonAuctions.push(listing.listingId);
                 }
             }
 

@@ -1,14 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { SaleAuctionManagementModal } from './';
 
 const AuctionSalesManagementButton = ({ activeSales, expiredAuctions, wonAuctions, setDisplayButton }) => {
   const [isOpen, setIsOpen] = useState(false);
-  console.log('AuctionSalesManagementButton rendered, isOpen set to: ', isOpen)
-
-  useEffect(() => {
-    setDisplayButton(activeSales.length > 0 || expiredAuctions.length > 0 || wonAuctions.length > 0);
-  }, [activeSales, expiredAuctions, wonAuctions]);
-
+    console.log('AuctionSalesManagementButton rendered, isOpen set to: ', isOpen)
   const handleClose = () => {
     setIsOpen(false);
   }
@@ -16,11 +11,11 @@ const AuctionSalesManagementButton = ({ activeSales, expiredAuctions, wonAuction
   return (
     <>
       <div className='auction-sales-management-button' onClick={() => setIsOpen(true)}>Manage Auctions/Sales</div>
-      <SaleAuctionManagementModal
-        activeSales={activeSales}
-        expiredAuctions={expiredAuctions}
-        wonAuctions={wonAuctions}
-        open={isOpen}
+      <SaleAuctionManagementModal 
+        activeSales={activeSales} 
+        expiredAuctions={expiredAuctions} 
+        wonAuctions={wonAuctions} 
+        open={isOpen} 
         onClose={handleClose}
       />
     </>

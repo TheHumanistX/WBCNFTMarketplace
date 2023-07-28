@@ -3,7 +3,7 @@ import { useMarketplace, useNFT } from '../context'
 import { auctionCollect } from '../utility'
 import { useFetchNftData } from '../hooks'
 
-const SaleAuctionManagementModal = ({ activeSales, expiredAuctions, wonAuctions, open, onClose }) => {
+const SaleAuctionManagementModal = ({ activeSales, expiredAuctions, wonAuctions, open, onClose, tokenId }) => {
   console.log('Entered SaleAuctionManagementModal... open set to: ', open)
 
   const { marketplaceContract } = useMarketplace();
@@ -12,8 +12,7 @@ const SaleAuctionManagementModal = ({ activeSales, expiredAuctions, wonAuctions,
 
   const [auctionsToCollect, setAuctionsToCollect] = useState(false)
   const [salesToCancel, setSalesToCancel] = useState(false)
-  
-  const nftData = useFetchNftData(nftContract, tokenId); //! Need to figure out how to work this. tokenId needs to be pulled from activeSales.tokenId, etc.  Need this done in a mapping... 
+  const nftData = useFetchNftData(nftContract, tokenId);
   if (!open) return null;
   console.log('SaleAuctionManagementModal wonAuctions: ', wonAuctions)
   return (
@@ -26,7 +25,7 @@ const SaleAuctionManagementModal = ({ activeSales, expiredAuctions, wonAuctions,
             <div className='management-modal__flex-item'>
               <h2>Auctions Won</h2>
               <p>Collect your auctions that you have won.</p>
-            
+
 
 
               <button className='management-modal__button' onClick={() => setAuctionsToCollect(true)}>Collect Auctions</button>

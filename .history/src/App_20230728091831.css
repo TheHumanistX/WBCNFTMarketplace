@@ -495,36 +495,6 @@ header {
               5px 5px 8px rgb(0, 0, 0, 0.3);
 }
 
-.management-modal__overlay{
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgb(0, 0, 0, 0.6);
-  backdrop-filter: blur(3px);
-  padding: 10px;
-  border-radius: 25px;
-  box-shadow: inset 3px 3px 5px rgb(255, 255, 255, 0.1), 
-              inset -3px -3px 5px rgb(255, 255, 255, 0.1), 
-              5px 5px 8px rgb(0, 0, 0, 0.3);
-  z-index: 100;
-}
-
 .management-modal__container {
-  position: fixed;
-  display: flex;
-  max-width: 80vw;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: #141414;
-  padding: 50px;
-  z-index: 200;
-  border: 5px solid #5142FC;
-  border-radius: 10px;
-  color: #fff;
+  
 }

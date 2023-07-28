@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 
 export const useFetchNftData = (nftContract, tokenId) => {
   const [nftData, setNftData] = useState(null);
-  const [nft, setNFT] = useState(null);
 
   useEffect(() => {
     const fetchURI = async () => {

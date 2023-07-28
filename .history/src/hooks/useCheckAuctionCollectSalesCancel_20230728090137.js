@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { useEthers, useMarketplace } from '../context';
 
-export const useCheckAuctionCollectSalesCancel = (setDisplayButton) => {
+export const useCheckAuctionCollectSalesCancel = ( setDisplayButton) => {
 
     const { ETHEREUM_NULL_ADDRESS, userWalletAddress } = useEthers();
     const { marketplaceContract } = useMarketplace();
@@ -11,7 +11,7 @@ export const useCheckAuctionCollectSalesCancel = (setDisplayButton) => {
     const [wonAuctions, setWonAuctions] = useState([]);
 
     useEffect(() => {
-        if (!marketplaceContract) return;
+        if(!marketplaceContract) return;
         const checkAuctionCollectSalesCancel = async () => {
             let lastListingId = await marketplaceContract.idCounter();
             lastListingId = lastListingId.toNumber();
@@ -36,30 +36,27 @@ export const useCheckAuctionCollectSalesCancel = (setDisplayButton) => {
             for (const listing of listingData) {
                 let currentStatus;
                 let currentOwner;
-                let tokenId;
 
                 if (listing.listingType === 1) { // sale
                     currentStatus = await marketplaceContract.getListingStatus(listing.listingId);
                     currentOwner = (await marketplaceContract.getListing(listing.listingId)).owner;
-                    tokenId = ((await marketplaceContract.getListing(listing.listingId)).tokenID).toNumber();
                 } else if (listing.listingType === 2) { // auction
                     currentStatus = await marketplaceContract.getAuctionStatus(listing.listingId);
                     currentOwner = (await marketplaceContract.getAuction(listing.listingId)).owner;
-                    tokenId = ((await marketplaceContract.getAuction(listing.listingId)).tokenID).toNumber();
                 }
 
                 if (currentOwner === userWalletAddress) {
                     if (listing.listingType === 1 && currentStatus === 1) {
-                        usersActiveSales.push({listingId:listing.listingId, tokenId:tokenId});
+                        usersActiveSales.push(listing.listingId);
                     } else if (listing.listingType === 2 && currentStatus === 3 && (await marketplaceContract.getAuction(listing.listingId)).topBidder === ETHEREUM_NULL_ADDRESS) {
 
-                        usersExpiredAuctions.push({listingId:listing.listingId, tokenId:tokenId});
+                        usersExpiredAuctions.push(listing.listingId);
                     }
                 } else if (currentStatus === 4 && (await marketplaceContract.getAuction(listing.listingId)).topBidder === userWalletAddress) {
-                    usersWonAuctions.push({listingId:listing.listingId, tokenId:tokenId});
+                    usersWonAuctions.push(listing.listingId);                    
                 }
             }
-
+            
 
             setActiveSales(usersActiveSales);
             console.log('usersActiveSales: ', usersActiveSales)
@@ -67,13 +64,10 @@ export const useCheckAuctionCollectSalesCancel = (setDisplayButton) => {
             console.log('usersExpiredAuctions: ', usersExpiredAuctions)
             setWonAuctions(usersWonAuctions);
             console.log('usersWonAuctions: ', usersWonAuctions)
+            setDisplayButton(usersActiveSales.length > 0 || usersExpiredAuctions.length > 0 || usersWonAuctions.length > 0);
         }
         checkAuctionCollectSalesCancel();
     }, [marketplaceContract, userWalletAddress]);
-
-    useEffect(() => {
-        setDisplayButton(activeSales.length > 0 || expiredAuctions.length > 0 || wonAuctions.length > 0);
-    }, [activeSales, expiredAuctions, wonAuctions]);
 
     return {
         activeSales,

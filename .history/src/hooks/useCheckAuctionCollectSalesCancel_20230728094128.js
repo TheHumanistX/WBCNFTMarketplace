@@ -41,11 +41,10 @@ export const useCheckAuctionCollectSalesCancel = (setDisplayButton) => {
                 if (listing.listingType === 1) { // sale
                     currentStatus = await marketplaceContract.getListingStatus(listing.listingId);
                     currentOwner = (await marketplaceContract.getListing(listing.listingId)).owner;
-                    tokenId = ((await marketplaceContract.getListing(listing.listingId)).tokenID).toNumber();
                 } else if (listing.listingType === 2) { // auction
                     currentStatus = await marketplaceContract.getAuctionStatus(listing.listingId);
                     currentOwner = (await marketplaceContract.getAuction(listing.listingId)).owner;
-                    tokenId = ((await marketplaceContract.getAuction(listing.listingId)).tokenID).toNumber();
+                    tokenId = (await marketplaceContract.getListing(listing.listingId)).tokenId;
                 }
 
                 if (currentOwner === userWalletAddress) {

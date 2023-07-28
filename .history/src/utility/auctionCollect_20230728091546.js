@@ -1,4 +1,7 @@
-export const auctionCollect = (marketplaceContract, auctionId) => {
+import { useMarketplace } from "../context"
+
+export const auctionCollect = (auctionId) => {
+    const { marketplaceContract } = useMarketplace();
 
     const auctionCollect = async (auctionId) => {
         try {
