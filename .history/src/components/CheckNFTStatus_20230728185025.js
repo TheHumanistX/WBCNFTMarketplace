@@ -5,9 +5,8 @@ import { useMarketplace } from '../context'
 
 const CheckNFTStatus = ({ listingID, onCheckCompleted }) => {
     const { marketplaceContract } = useMarketplace();
-    console.log('Calling "getListingStatus" with listingID: ', listingID)
     const { data: nftListingStatus } = useContractRead(marketplaceContract, "getListingStatus", [listingID]);
-    console.log('nftListingStatus: ', nftListingStatus);
+    
 
     useEffect(() => {
         if (nftListingStatus === 1) {
