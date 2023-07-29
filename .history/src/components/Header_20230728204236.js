@@ -3,12 +3,15 @@ import { ConnectWallet } from '@thirdweb-dev/react'
 import { Navigation } from './';
 
 const Header = () => {
+
+  console.log('CONNECT WALLET PROPTYPES: ', ConnectWallet.propTypes);
+
   return (
     <header>
       <div className='header__container'>
         <span className='header__logo'>mintfinity</span>
         <Navigation />
-        <ConnectWallet />
+        <ConnectWallet className='header__wallet' />
       </div>
     </header>
   )

@@ -9,6 +9,7 @@ const BidOnNFT = ({ bidWithETH, bidWithWBC, auctionID, minBidIncrement, formatte
   
   const [bidAmount, setBidAmount] = useState('');
   const minBidAmount = (parseFloat(formattedCurrentBid) * 100 + parseFloat(formattedMinBidIncrement) * 100) / 100;
+
   const minimumAllowableBid = parseFloat(formattedCurrentBid) + parseFloat(formattedMinBidIncrement);
 
   const handleBidWithETH = (bidAmount, auctionID, minimumAllowableBid) => {

@@ -44,7 +44,7 @@ export const EthersProvider = ({ children }) => {
                             }
                         }
                     }
-
+                    
                     console.log('EthersContext initialized.... Ready for contract interactions....')
                 };
             } catch (err) {
@@ -58,48 +58,41 @@ export const EthersProvider = ({ children }) => {
             }
         }
 
-        window.ethereum.on('chainChanged', (networkIdHex) => {
-            const networkId = parseInt(networkIdHex, 16);
-            ethersDataSetup(networkId);
-        });
+            window.ethereum.on('chainChanged', (networkIdHex) => {
+                const networkId = parseInt(networkIdHex, 16);
+                ethersDataSetup(networkId);
+            });
 
-        window.ethereum.on('accountsChanged', async (accounts) => {
-            console.log('EthersContext accountsChanged entered on account change...')
-            if (accounts.length === 0) {
-                console.log('Please connect to MetaMask.');
-                alert('Your MetaMask is not connected anymore. Please unlock or reconnect.'); // display an alert
-                // handle account disconnection...
-                setUserWalletAddress(null);
-                setSigner(null);
-            } else if (accounts[0] !== userWalletAddress) {
-                const provider = new ethers.providers.Web3Provider(window.ethereum);
-                console.log('EthersContext accountsChanged provider: ', provider)
-                try {
-                    const signer = await provider.getSigner();
-                    const walletAddress = await signer.getAddress();
-                    console.log('EthersContext walletAddress updated to: ', walletAddress)
-                    setSigner(signer);
-                    setUserWalletAddress(walletAddress);
-                } catch (error) {
-                    if (error.code === 4001) {
-                        // User rejected request
-                        console.log("User rejected request");
-                        // Add some user-friendly notification logic here
-                    } else {
-                        console.error(error);
+            window.ethereum.on('accountsChanged', async (accounts) => {
+                console.log('EthersContext accountsChanged entered on account change...')
+                if (accounts.length === 0) {
+                    console.log('Please connect to MetaMask.');
+                    alert('Your MetaMask is not connected anymore. Please unlock or reconnect.'); // display an alert
+                    // handle account disconnection...
+                    setUserWalletAddress(null);
+                    setSigner(null);
+                } else if (accounts[0] !== userWalletAddress) {
+                    const provider = new ethers.providers.Web3Provider(window.ethereum);
+                    console.log('EthersContext accountsChanged provider: ', provider)
+                    try {
+                        const signer = await provider.getSigner();
+                        const walletAddress = await signer.getAddress();
+                        console.log('EthersContext walletAddress updated to: ', walletAddress)
+                        setSigner(signer);
+                        setUserWalletAddress(walletAddress);
+                    } catch (err) {
+                        console.error(err);
                         alert('Error when getting wallet address. Please check your MetaMask connection.');
                         setUserWalletAddress(null);
                         setSigner(null);
                     }
                 }
-
-            }
-        });
+            });
 
 
-        // Initial setup
-        ethersDataSetup(parseInt(window.ethereum.networkVersion, 10));
-    }, []);
+            // Initial setup
+            ethersDataSetup(parseInt(window.ethereum.networkVersion, 10));
+        }, []);
 
     return (
         <EthersContext.Provider value={{
