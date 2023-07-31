@@ -62,25 +62,7 @@ const ShowListedNFTs = ({ listing, buyWithETH, buyWithWBC, bidWithETH, bidWithWB
                     <NFTImage {...commonProps} />
                     <NFTMeta {...commonProps} nftContract={nftContract} />
                     <div className='nft-listing__data'>
-                    <div>
-                        <span>Price: {
-                            currentListing.paymentContractAddress === ETHEREUM_NULL_ADDRESS
-                                ?
-                                currentListing.formattedPrice + ' ETH'
-                                :
-                                currentListing.formattedPrice + ' ' + tokenSymbol
-
-                        }</span>
-                        <span>Sold By: {currentListing.owner}</span>
-                        <PurchaseNFT
-                            buyWithETH={buyWithETH}
-                            buyWithWBC={buyWithWBC}
-                            listingID={currentListing.listingID}
-                            price={currentListing.price}
-                            tokenSymbol={tokenSymbol}
-                            paymentContractAddress={currentListing.paymentContractAddress}
-                        />
-                        </div>
+                        // Remainder of code here...
                     </div>
                 </div>
             ) : (
@@ -88,37 +70,7 @@ const ShowListedNFTs = ({ listing, buyWithETH, buyWithWBC, bidWithETH, bidWithWB
                     <NFTImage {...commonProps} />
                     <NFTMeta {...commonProps} nftContract={nftContract} />
                     <div className='nft-listing__data'>
-                    <div>
-                            <span>Current Bid: {
-                                currentListing.paymentContractAddress === ETHEREUM_NULL_ADDRESS
-                                    ?
-                                    currentListing.formattedCurrentBid + ' ETH'
-                                    :
-                                    currentListing.formattedCurrentBid + ' ' + tokenSymbol
-
-                            }</span>
-                            <span>Minimum Bid Increments: {
-                                currentListing.paymentContractAddress === ETHEREUM_NULL_ADDRESS
-                                    ?
-                                    currentListing.formattedMinBidIncrement + ' ETH'
-                                    :
-                                    currentListing.formattedMinBidIncrement + ' ' + tokenSymbol
-
-                            }</span>
-                            <span>Expiration Date: {currentListing.formattedExpiration}</span>
-                            <span>Time Remaining: <TimeRemaining expiration={currentListing.expiration} /></span>
-                            <span>Sold By: {currentListing.owner}</span>
-                            <BidOnNFT
-                                bidWithETH={bidWithETH}
-                                bidWithWBC={bidWithWBC}
-                                auctionID={currentListing.auctionID}
-                                minBidIncrement={currentListing.minBidIncrement}
-                                formattedCurrentBid={currentListing.formattedCurrentBid}
-                                formattedMinBidIncrement={currentListing.formattedMinBidIncrement}
-                                tokenSymbol={tokenSymbol}
-                                paymentContractAddress={currentListing.paymentContractAddress}
-                            />
-                        </div>
+                        // Remainder of code here...
                     </div>
                 </div>
             )}

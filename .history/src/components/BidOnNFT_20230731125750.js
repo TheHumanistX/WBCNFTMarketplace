@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { useEthers } from '../context'
+import { useLocation } from 'react-router-dom';
 
 const BidInput = ({ bidAmount, setBidAmount, placeholder }) => (
   <div>
@@ -55,6 +56,8 @@ const BidWithWBC = ({
 
 const BidOnNFT = ({ bidWithETH, bidWithWBC, auctionID, minBidIncrement, formattedCurrentBid, formattedMinBidIncrement, tokenSymbol, paymentContractAddress }) => {
   const { ETHEREUM_NULL_ADDRESS } = useEthers();
+  const location = useLocation();
+  const path = location.pathname;
 
   const [bidAmount, setBidAmount] = useState('');
   const minBidAmount = (parseFloat(formattedCurrentBid) * 100 + parseFloat(formattedMinBidIncrement) * 100) / 100;

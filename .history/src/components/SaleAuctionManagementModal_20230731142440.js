@@ -1,4 +1,5 @@
 import React from 'react'
+
 import { ShowCollectibleNFTs } from '../components'
 
 const ListingSection = ({ title, description, listings, status }) => (

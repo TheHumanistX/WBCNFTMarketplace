@@ -11,24 +11,33 @@ const ShowCollectibleNFTs = ({ listing, status }) => {
         setNFTContractAddress(listing.nftContractAddress);
     }, [listing])
 
-    const handleAction = (action) => async (id) => {
-        console.log(`Entering ${action.name}...`)
+    const handleCollect = async (auctionId) => {
+        console.log('handleCollect entered....')
         try {
-            const response = await marketplaceContract[action](id);
-            const receipt = await response.wait();
-            console.info("Contract call success", receipt);
-            console.log(`${action.name} status`, receipt.status);
+            const collectResponse = await marketplaceContract.endAuction(auctionId);
+            const collectReceipt = await collectResponse.wait();
+            console.info("Contract call successs", collectReceipt);
+            console.log("Collect status", collectReceipt.status);
             setCancelOrCollectSuccesful(!cancelOrCollectSuccesful)
-            return receipt;
+            return collectReceipt;
         } catch (err) {
-            console.error("Contract call failure", err.message);
+            console.error("contract call failure", err.message);
         }
     }
-    
-    const handleCollect = handleAction('endAuction');
-    const handleCancelSale = handleAction('cancelListing');
-    
-    
+
+    const handleCancelSale = async () => {
+        console.log('handleCancelSale entered....')
+        try {
+            const cancelResponse = await marketplaceContract.cancelListing(listing.listingId);
+            const cancelReceipt = await cancelResponse.wait();
+            console.info("Contract call successs", cancelReceipt);
+            console.log("Cancel status", cancelReceipt.status);
+            setCancelOrCollectSuccesful(!cancelOrCollectSuccesful)
+            return cancelReceipt;
+        } catch (err) {
+            console.error("contract call failure", err.message);
+        }
+    }
     const nftData = useFetchNftData(nftContract, listing.tokenId);
 
     if (!nftData || !nftContract) return null;

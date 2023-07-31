@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { useEthers } from '../context'
+import { useLocation } from 'react-router-dom';
 
 const BidInput = ({ bidAmount, setBidAmount, placeholder }) => (
   <div>

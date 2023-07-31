@@ -1,60 +1,32 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { useEthers } from '../context'
+import { useLocation } from 'react-router-dom';
 
 const BidInput = ({ bidAmount, setBidAmount, placeholder }) => (
+  <input type='number' id='bidAmount' name='bidAmount' placeholder={placeholder} value={bidAmount} onChange={(e) => setBidAmount(e.target.value)} />
+);
+
+const BidWithETH = ({ minBidAmount, bidAmount, setBidAmount, onBid, auctionID, minimumAllowableBid }) => (
   <div>
     <label htmlFor='bidAmount'>Bid Amount: </label>
-    <input type='number' id='bidAmount' name='bidAmount' placeholder={placeholder} value={bidAmount} onChange={(e) => setBidAmount(e.target.value)} />
+    <BidInput bidAmount={bidAmount} setBidAmount={setBidAmount} placeholder={`Minimum ${minBidAmount} ETH`} />
+    <button className='bidOnNFT__button' onClick={() => onBid(bidAmount, auctionID, minimumAllowableBid)}>Bid with ETH</button>
   </div>
 );
 
-const BidWithETH = ({
-  minBidAmount,
-  bidAmount,
-  setBidAmount,
-  handleBidWithETH,
-  auctionID,
-  minimumAllowableBid
-}) => (
+const BidWithWBC = ({ minBidAmount, tokenSymbol, bidAmount, setBidAmount, onBid, bidMinIncrement, auctionID }) => (
   <div>
-    <BidInput bidAmount={bidAmount} setBidAmount={setBidAmount} placeholder={`Minimum ${minBidAmount} ETH`} />
-    <button className='bidOnNFT__button' onClick={() =>
-      handleBidWithETH(bidAmount, auctionID, minimumAllowableBid)
-    }
-    >
-      Bid with ETH
-    </button>
-  </div>
-)
-
-const BidWithWBC = ({
-  minBidAmount,
-  tokenSymbol,
-  bidAmount,
-  setBidAmount,
-  handleBidWithWBC,
-  auctionID,
-  minimumAllowableBid,
-  bidWithWBC
-}) => (
-  <div>
+    <label htmlFor='bidAmount'>Bid Amount: </label>
     <BidInput bidAmount={bidAmount} setBidAmount={setBidAmount} placeholder={`Minimum ${minBidAmount} ${tokenSymbol}`} />
-    <button className='bidOnNFT__button' onClick={() =>
-      handleBidWithWBC(bidAmount, auctionID, minimumAllowableBid)
-    }
-    >
-      Bid with {tokenSymbol}
-    </button><br />
-    <button className='bidOnNFTIncrement__button' onClick={() =>
-      bidWithWBC(`${minBidAmount}`, auctionID)
-    }>
-      Bid Min Increment
-    </button>
+    <button className='bidOnNFT__button' onClick={() => onBid(bidAmount, auctionID, minimumAllowableBid)}>Bid with {tokenSymbol}</button><br />
+    <button className='bidOnNFTIncrement__button' onClick={() => bidMinIncrement(`${minBidAmount}`, auctionID)}>Bid Min Increment</button>
   </div>
-)
+);
 
 const BidOnNFT = ({ bidWithETH, bidWithWBC, auctionID, minBidIncrement, formattedCurrentBid, formattedMinBidIncrement, tokenSymbol, paymentContractAddress }) => {
   const { ETHEREUM_NULL_ADDRESS } = useEthers();
+  const location = useLocation();
+  const path = location.pathname;
 
   const [bidAmount, setBidAmount] = useState('');
   const minBidAmount = (parseFloat(formattedCurrentBid) * 100 + parseFloat(formattedMinBidIncrement) * 100) / 100;

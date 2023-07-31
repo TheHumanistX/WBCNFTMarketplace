@@ -11,23 +11,22 @@ const ShowCollectibleNFTs = ({ listing, status }) => {
         setNFTContractAddress(listing.nftContractAddress);
     }, [listing])
 
-    const handleAction = (action) => async (id) => {
+    const handleAction = (action, successLog, errorLog) => async (id) => {
         console.log(`Entering ${action.name}...`)
         try {
             const response = await marketplaceContract[action](id);
             const receipt = await response.wait();
-            console.info("Contract call success", receipt);
+            console.info(successLog, receipt);
             console.log(`${action.name} status`, receipt.status);
             setCancelOrCollectSuccesful(!cancelOrCollectSuccesful)
             return receipt;
         } catch (err) {
-            console.error("Contract call failure", err.message);
+            console.error(errorLog, err.message);
         }
     }
     
-    const handleCollect = handleAction('endAuction');
-    const handleCancelSale = handleAction('cancelListing');
-    
+    const handleCollect = handleAction(marketplaceContract.endAuction, "Contract call success", "Contract call failure");
+    const handleCancelSale = handleAction(marketplaceContract.cancelListing, "Contract call success", "Contract call failure");
     
     const nftData = useFetchNftData(nftContract, listing.tokenId);
 
