@@ -4,7 +4,7 @@ export { default as BidOnNFT } from './BidOnNFT';
 export { default as Header } from './Header';
 export { default as MarqueeScroller } from './MarqueeScroller';
 export { default as Navigation } from './Navigation';
-export { default as OwnedNFTs } from './OwnedNFTs';
+export { default as ownedNFTs } from './ownedNFTs';
 export { default as PurchaseNFT } from './PurchaseNFT';
 export { default as SaleAuctionManagementModal } from './SaleAuctionManagementModal';
 export { default as ShowCollectibleNFTs } from './ShowCollectibleNFTs';

@@ -1,11 +1,14 @@
 import React, { useState } from 'react'
+import { useLocation } from 'react-router-dom';
 import { ethers } from 'ethers'
 import { useMarketplace, useNFT, useToken } from '../context';
-import { AlertModal, AuctionSalesManagementButton, OwnedNFTs, SubmitNFTContractAddress } from '../components'
+import { AlertModal, AuctionSalesManagementButton, ShowOwnedNFTs, SubmitNFTContractAddress } from '../components'
 import { useCheckAuctionCollectSalesCancel, useOwnedNFTs } from '../hooks';
 import { approveNFTTransfer, createAuctionInputChecks, createNewAuction } from '../utility';
 
 const CreateAuction = () => {
+    const location = useLocation();
+    const path = location.pathname;
 
     // Import necessary context data for this component
 
@@ -19,6 +22,7 @@ const CreateAuction = () => {
         nftContract,
         nftContractName,
         setNFTContractAddress,
+        userNFTBalance,
         lastNFTMintedId,
     } = useNFT();
 
@@ -29,6 +33,7 @@ const CreateAuction = () => {
     const [txConfirm, setTxConfirm] = useState('');
     const [isOpen, setIsOpen] = useState(false);
     const [modalText, setModalText] = useState('');
+    const [createAuctionCheckFailed, setCreateAuctionCheckFailed] = useState(false);
     const [displayButton, setDisplayButton] = useState(false);
 
     const { activeSales, expiredAuctions, wonAuctions } = useCheckAuctionCollectSalesCancel(setDisplayButton);

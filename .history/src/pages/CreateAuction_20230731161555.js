@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useLocation } from 'react-router-dom';
 import { ethers } from 'ethers'
 import { useMarketplace, useNFT, useToken } from '../context';
 import { AlertModal, AuctionSalesManagementButton, OwnedNFTs, SubmitNFTContractAddress } from '../components'
@@ -19,6 +20,7 @@ const CreateAuction = () => {
         nftContract,
         nftContractName,
         setNFTContractAddress,
+        userNFTBalance,
         lastNFTMintedId,
     } = useNFT();
 
@@ -29,6 +31,7 @@ const CreateAuction = () => {
     const [txConfirm, setTxConfirm] = useState('');
     const [isOpen, setIsOpen] = useState(false);
     const [modalText, setModalText] = useState('');
+    const [createAuctionCheckFailed, setCreateAuctionCheckFailed] = useState(false);
     const [displayButton, setDisplayButton] = useState(false);
 
     const { activeSales, expiredAuctions, wonAuctions } = useCheckAuctionCollectSalesCancel(setDisplayButton);

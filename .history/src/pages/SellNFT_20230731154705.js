@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { ethers } from 'ethers';
-import { useMarketplace, useNFT, useToken } from '../context'
-import { AlertModal, AuctionSalesManagementButton, OwnedNFTs, SubmitNFTContractAddress } from '../components';
+import { useEthers, useMarketplace, useNFT, useToken } from '../context'
+import { AlertModal, AuctionSalesManagementButton, ShowOwnedNFTs, SubmitNFTContractAddress } from '../components';
 import { useCheckAuctionCollectSalesCancel, useOwnedNFTs } from '../hooks';
 import { listNFT } from '../utility';
 
@@ -103,14 +103,30 @@ const SellNFT = () => {
       )}
       <h1>LIST YOUR NFT</h1>
       <SubmitNFTContractAddress setNFTContractAddress={setNFTContractAddress} />
-      {nftContract &&
-        <OwnedNFTs
-          ownedNFTs={ownedNFTs}
-          handleListingSubmission={handleListNFTForSale}
-          setListingCurrency={setListingCurrency}
-          nftContractName={nftContractName}
-        />
-      }
+      <span>You currently hold {ownedNFTs ? ownedNFTs.length : '0'} NFTs from the {nftContractName ? nftContractName : ''} contract.</span>
+      <span>IDs of currently held nfts are: {
+        ownedNFTs &&
+        ownedNFTs.map((tokenId, index) => {
+          if (index === ownedNFTs.length - 1) {
+            return (
+              <span key={index}>{tokenId}</span>
+            )
+          }
+          return (
+            <span key={index}>{tokenId}, </span>
+          )
+        })
+      }</span>
+      <div className='sellnft__owned-grid'>
+        {ownedNFTs && ownedNFTs.map((tokenId) => {
+          return (<ShowOwnedNFTs
+            tokenId={tokenId}
+            onListingSubmission={handleListNFTForSale}
+            setListingCurrency={setListingCurrency}
+          />)
+        }
+        )}
+      </div>
       <AlertModal open={isOpen} onClose={() => setIsOpen(false)}>
         {modalText}
       </AlertModal>

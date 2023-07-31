@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { ethers } from 'ethers';
-import { useMarketplace, useNFT, useToken } from '../context'
-import { AlertModal, AuctionSalesManagementButton, OwnedNFTs, SubmitNFTContractAddress } from '../components';
+import { useEthers, useMarketplace, useNFT, useToken } from '../context'
+import { AlertModal, AuctionSalesManagementButton, ShowOwnedNFTs, SubmitNFTContractAddress } from '../components';
 import { useCheckAuctionCollectSalesCancel, useOwnedNFTs } from '../hooks';
 import { listNFT } from '../utility';
 

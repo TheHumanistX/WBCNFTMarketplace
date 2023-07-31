@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { ethers } from 'ethers';
-import { useMarketplace, useNFT, useToken } from '../context'
-import { AlertModal, AuctionSalesManagementButton, OwnedNFTs, SubmitNFTContractAddress } from '../components';
+import { useEthers, useMarketplace, useNFT, useToken } from '../context'
+import { AlertModal, AuctionSalesManagementButton, ShowOwnedNFTs, SubmitNFTContractAddress } from '../components';
 import { useCheckAuctionCollectSalesCancel, useOwnedNFTs } from '../hooks';
 import { listNFT } from '../utility';
 
@@ -103,14 +103,16 @@ const SellNFT = () => {
       )}
       <h1>LIST YOUR NFT</h1>
       <SubmitNFTContractAddress setNFTContractAddress={setNFTContractAddress} />
-      {nftContract &&
-        <OwnedNFTs
-          ownedNFTs={ownedNFTs}
-          handleListingSubmission={handleListNFTForSale}
-          setListingCurrency={setListingCurrency}
-          nftContractName={nftContractName}
-        />
+      {nftContract && 
+        <OwnedNFTs 
+        ownedNFTs={ownedNFTs}
+        handleListingSubmission={handleListNFTForSale}
+        setListingCurrency={setListingCurrency}
+        nftContractName={nftContractName}
+        loadingText='Fetching your NFTs...'
+      />
       }
+      </div>
       <AlertModal open={isOpen} onClose={() => setIsOpen(false)}>
         {modalText}
       </AlertModal>
