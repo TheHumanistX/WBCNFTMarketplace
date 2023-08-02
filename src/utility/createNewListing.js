@@ -1,4 +1,4 @@
-export const listNFT = async ({
+export const createNewListing = async ({
     approval, 
     setTxConfirm, 
     marketplaceContract, 
@@ -15,7 +15,7 @@ export const listNFT = async ({
                 const transactionResponse = await marketplaceContract.functions[createListingSigWithETH](nftContractAddress, tokenId, priceInWei);
                 const transactionReceipt = await transactionResponse.wait();
                 if (transactionReceipt.status === 1) {
-                    console.info("Contract call successs", transactionReceipt);
+                    console.info("Listing creation successs", transactionReceipt);
                     setTxConfirm(transactionReceipt.blockHash);
                 } else {
                     console.error("Transaction failed");
@@ -31,7 +31,7 @@ export const listNFT = async ({
                 const transactionResponse = await marketplaceContract.functions[createListingSigWithToken](nftContractAddress, tokenContractAddress, tokenId, priceInWei);
                 const transactionReceipt = await transactionResponse.wait();
                 if (transactionReceipt.status === 1) {
-                    console.info("Contract call successs", transactionReceipt);
+                    console.info("Listing creation successs", transactionReceipt);
                     setTxConfirm(transactionReceipt.blockHash);
                 } else {
                     console.error("Transaction failed");
