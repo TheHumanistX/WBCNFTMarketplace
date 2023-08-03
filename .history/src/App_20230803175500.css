@@ -1,0 +1,636 @@
+/* CSS RESET */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  line-height: 1.5;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+}
+
+/* Site CSS Code */
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+body {
+  background-color: #14141f;
+  font-family: 'Roboto', sans-serif;
+  height: 100vh;
+}
+
+#root {
+  height: 100%;
+}
+
+a {
+  text-decoration: none;
+  color: #fff;
+}
+
+.app__wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding-top: 8vh;
+}
+
+.routes__container {
+  flex-grow: 1;
+}
+
+section {
+  background-image: url('./assets/other-bg.svg');
+  background-size: cover;
+  background-attachment: fixed;
+  /* height: 100%; */
+}
+
+/* Header */
+
+header {
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  height: 8vh;
+  top: 0;
+  background-color:#14141f;
+  box-shadow: 2px 2px 4px -2px rgb(226, 80, 229);
+}
+
+.header__container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 80vw;
+  padding: 0 45px;
+}
+
+.header__logo {
+  font-size: clamp(2.00rem, calc(-0.43rem + 2.86vw), 3.00rem);
+  color: #fff;
+}
+
+/* Navigation */
+
+.navbar__list {
+  display: flex;
+  align-items: center;
+  column-gap: 6rem;
+  margin-bottom: 0;
+  list-style: none;
+}
+
+.navbar__item a {
+  font-size: clamp(0.88rem, calc(-0.64rem + 1.79vw), 1.50rem);
+}
+
+.navbar__item a:hover {
+  color: #fff;
+}
+
+.active {
+  color: #e250e5 !important;
+}
+
+/* Wallet Connect */
+
+.header__wallet {
+  width: 10vw !important;
+  height: 5vh !important;
+  font-size: clamp(0.75rem, calc(0.14rem + 0.71vw), 1.00rem) !important;
+  background-color: rgb(255, 255, 255, 0.05) !important;
+  backdrop-filter: blur(3px) !important;
+  color: #fff !important;
+  border: 2px solid #5142FC !important;
+}
+
+.header__wallet span {
+  font-size: clamp(0.75rem, calc(0.14rem + 0.71vw), 1.00rem) !important;
+}
+
+.tw-connected-wallet {
+  display: flex !important;
+  justify-content: space-evenly !important;
+  width: 14vw !important;
+  height: 7vh !important;
+}
+
+.css-16br1f7 {}
+
+/* Home */
+
+.home__container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  row-gap: 16vh;
+}
+
+.home__logo {
+  width: 62vw;
+}
+
+.home-discover__button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 28vw;
+  height: 10vh;
+  background: rgba(52, 52, 68, 0.3);
+  backdrop-filter: blur(1.5px);
+  border: 5px solid #5142FC;
+  border-radius: 25px;
+  font-size: clamp(2.00rem, calc(-0.43rem + 2.86vw), 3.00rem);
+  line-height: 58px;
+  color: #fff;
+
+}
+
+
+/* Marketplace */
+
+.marketplace__container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6vh;
+  padding: 20px 0px;
+}
+
+.marketplace__title {
+  display: flex;
+  justify-content: center;
+  /* margin-top: 8vh; */
+}
+
+.marketplace__title-image {
+  width: 60vw;
+}
+
+.marketplace__marquee {
+  display: block;
+}
+
+.marketplace__nav-buttons {}
+
+.marketplace-buttons__list {
+
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 3vh;
+}
+
+.marketplace-buttons__item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 15vw;
+  height: 7vh;
+  background-color: rgb(255, 255, 255, .05);
+  backdrop-filter: blur(3px);
+  border: 4px solid #5142FC;
+  border-radius: 15px;
+  color: #fff;
+  font-size: clamp(1.00rem, calc(-1.43rem + 2.86vw), 2.00rem);
+}
+
+/* MarqueeScroll */
+
+.marqueeScroller__nft-gifs img {
+  width: 10vw;
+  border-radius: 25px;
+}
+
+/* BuyNFT & ViewAuction and components */
+.buy__owned-flex {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+.buy__owned-flex > div {
+  min-width: 32vw;
+}
+
+.buynft__container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3vh;
+  margin-top: 20px;
+  padding: 5vh;
+  color: #fff;
+}
+
+.showListedNFT__container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  background-color: rgb(255, 255, 255, 0.05);
+  backdrop-filter: blur(3px);
+  padding: 10px 0;
+  border-radius: 25px;
+  box-shadow: inset 3px 3px 5px rgb(255, 255, 255, 0.1),
+    inset -3px -3px 5px rgb(255, 255, 255, 0.1),
+    5px 5px 8px rgb(0, 0, 0, 0.3);
+  color: #fff;
+  min-height: 50vh;
+}
+
+
+.nft-listing__image {
+  grid-column: span 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.nft-listing__meta {
+  grid-column: span 1;
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+  padding: 0 4vh;
+  text-align: left;
+}
+
+.last-minted__name {
+  margin-bottom: 3vh;
+}
+
+.nft-listing__data {
+  grid-column: span 2;
+  padding: 0 3vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.nft-listing__data-row1 {
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+}
+
+.nft-listing__data-row2,
+.nft-listing__data-row3,
+.nft-listing__data-row4 {
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+}
+
+.BidOnNFT-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2vh;
+}
+
+.BidOnNFT__BidInput {
+  display: flex;
+  gap: 8vh;
+}
+
+.bidOnNFT__button-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  gap: 1vh;
+}
+
+#bidAmount {
+  width: 9vw;
+}
+
+/* SellNFT */
+
+.sellNFT__container,
+.auctionNFT__container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3vh;
+  padding: 5vh;
+  color: #fff;
+}
+
+.sellNFT__contract-form,
+.auctionNFT__contract-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.ownednft__owned-grid,
+.buynft__owned-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(125px, 1fr));
+  gap: 20px;
+  width: 70vw;
+}
+
+.owned-nft__flex {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.owned-nfts,
+.listed-nfts {
+  width: clamp(6.50rem, calc(-9.16rem + 18.05vw), 12.50rem);
+  border: 2px solid #5142FC;
+  border-radius: 25px;
+}
+
+.owned-nft__sale-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.owned-nft__sale-form input {
+  width: clamp(7rem, calc(-7.31rem + 15.88vw), 11.75rem);
+}
+
+
+
+/* Contact */
+
+.contact__container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+}
+
+.contact__container div {
+  width: 100%;
+}
+
+.contact__container form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2vh;
+  /* width: 40vw; */
+  color: #fff;
+  font-size: clamp(0.75rem, calc(-1.07rem + 2.14vw), 1.50rem);
+}
+
+.contact__container label {
+  display: block;
+  font-size: clamp(1.00rem, calc(-1.43rem + 2.86vw), 2.00rem);
+}
+
+.contact__container input[type=text],
+.contact__container input[type=email] {
+  height: 5vh;
+  width: 100%;
+  padding: 0 1.5vh;
+}
+
+.contact__container input[type=text],
+.contact__container input[type=email],
+.contact__container textarea {
+  border-radius: 10px;
+  outline: none;
+  border: 5px solid #343444;
+}
+
+.contact__container textarea {
+  padding: 1vh 2vh;
+}
+
+.contact__form-buttons {
+  display: flex;
+  justify-content: space-around;
+}
+
+.contact__form-buttons input {
+  width: 30%;
+  height: 5vh;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+/* Alert/Error Modal */
+
+.modal__overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgb(0, 0, 0, 0.6);
+  backdrop-filter: blur(3px);
+  padding: 10px;
+  border-radius: 25px;
+  box-shadow: inset 3px 3px 5px rgb(255, 255, 255, 0.1),
+    inset -3px -3px 5px rgb(255, 255, 255, 0.1),
+    5px 5px 8px rgb(0, 0, 0, 0.3);
+  z-index: 1000;
+}
+
+.modal__container {
+  position: fixed;
+  display: flex;
+  max-width: 80vw;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #141414;
+  padding: 50px;
+  z-index: 1000;
+  border: 5px solid #5142FC;
+  border-radius: 10px;
+  color: #fff;
+}
+
+.modal__button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+  width: 100px;
+  border: 1px solid rgb(226, 80, 229);
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+/* Active Sales & Expired/Won Auctions Modal */
+
+.auction-sales-management-button {
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+  width: 300px;
+  border: 2px solid #5142FC;
+  border-radius: 10px;
+  cursor: pointer;
+  color: #fff;
+  font-size: clamp(0.75rem, calc(-1.07rem + 2.14vw), 1.50rem);
+  z-index: 50;
+  top: 10vh;
+  right: 2vw;
+  background-color: rgb(255, 255, 255, 0.05);
+  backdrop-filter: blur(3px);
+  padding: 10px;
+  box-shadow: inset 3px 3px 5px rgb(255, 255, 255, 0.1),
+    inset -3px -3px 5px rgb(255, 255, 255, 0.1),
+    5px 5px 8px rgb(0, 0, 0, 0.3);
+}
+
+.management-modal__overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgb(0, 0, 0, 0.6);
+  backdrop-filter: blur(3px);
+  padding: 10px;
+  border-radius: 25px;
+  box-shadow: inset 3px 3px 5px rgb(255, 255, 255, 0.1),
+    inset -3px -3px 5px rgb(255, 255, 255, 0.1),
+    5px 5px 8px rgb(0, 0, 0, 0.3);
+  z-index: 100;
+}
+
+.management-modal__container {
+  position: fixed;
+  display: flex;
+  max-width: 80vw;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #141414;
+  padding: 50px;
+  z-index: 200;
+  border: 5px solid #5142FC;
+  border-radius: 10px;
+  color: #fff;
+}
+
+.collectible-nft__container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.management-modal__flex {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  gap: 10px;
+}
+
+.management-modal__flex-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.management-modal__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  gap: 10px;
+  width: 100%;
+}
+
+.management-modal__close-button {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: -1vh;
+  right: -1vw;
+  height: 35px;
+  width: 35px;
+  cursor: pointer;
+  border: 5px solid #5142FC;
+  background-color: #141414;
+}
+
+.management-modal__close-button>div {
+  font-size: clamp(1.00rem, calc(-0.23rem + 1.44vw), 1.50rem);
+  font-weight: 700;
+}
+
+.collectible-nft__container>img {
+  height: 100px;
+  width: 100px;
+}
+
+.collectible-nft__collect-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 30px;
+  width: 80px;
+  border: 2px solid rgb(226, 80, 229);
+  ;
+  border-radius: 10px;
+  cursor: pointer;
+}
