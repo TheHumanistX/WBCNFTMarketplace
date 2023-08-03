@@ -109,7 +109,6 @@ const ShowListedNFTs = ({
                             price={currentListing.price}
                             tokenSymbol={tokenSymbol}
                             paymentContractAddress={currentListing.paymentContractAddress}
-                            owner={currentListing.owner}
                         />
                     </div>
                 </div>

@@ -91,7 +91,7 @@ const BuyNFT = () => {
   }, [marketplaceContract, txConfirm]);
 
   const buyWithWBC = async (listingPrice, listingID, owner) => {
-    if(!await buyListingCheck(owner, userWalletAddress, setIsOpen, setModalText)) return;
+    if(!await buyListingCheck(owner, userWalletAddress)) return;
     try {
       await spendWithWBC(listingID, listingPrice, setTxConfirm, path);
     } catch (err) {
@@ -102,7 +102,7 @@ const BuyNFT = () => {
   }
   
   const buyWithETH = async (listingPrice, listingID, owner) => {
-    if(!await buyListingCheck(owner, userWalletAddress, setIsOpen, setModalText)) return;
+    if(!await buyListingCheck(owner, userWalletAddress)) return;
     try {
       console.log('BuyNFT buyWithETH(), calling `await spendWithETH`: ')
       await spendWithETH(listingID, listingPrice, setTxConfirm, path);

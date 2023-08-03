@@ -44,6 +44,7 @@ const BidWithWBC = ({
   handleBidWithWBC,
   auctionID,
   minimumAllowableBid,
+  bidWithWBC,
   owner
 }) => (
   <div className='BidOnNFT-container'>
@@ -111,6 +112,7 @@ const BidOnNFT = ({
     handleBidWithWBC={handleBidWithWBC} 
     auctionID={auctionID} 
     minimumAllowableBid={minimumAllowableBid} 
+    bidWithWBC={bidWithWBC} 
     owner={owner}
     />;
   }

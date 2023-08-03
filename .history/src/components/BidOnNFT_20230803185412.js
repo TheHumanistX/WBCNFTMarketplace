@@ -22,8 +22,7 @@ const BidWithETH = ({
   setBidAmount,
   handleBidWithETH,
   auctionID,
-  minimumAllowableBid,
-  owner
+  minimumAllowableBid
 }) => (
   <div className='BidOnNFT-container'>
     <BidInput bidAmount={bidAmount} setBidAmount={setBidAmount} placeholder={`Minimum ${minBidAmount} ETH`} />
@@ -44,13 +43,13 @@ const BidWithWBC = ({
   handleBidWithWBC,
   auctionID,
   minimumAllowableBid,
-  owner
+  bidWithWBC
 }) => (
   <div className='BidOnNFT-container'>
     <BidInput bidAmount={bidAmount} setBidAmount={setBidAmount} placeholder={`Minimum ${minBidAmount} ${tokenSymbol}`} />
     <div className='bidOnNFT__button-container'>
       <button className='bidOnNFTIncrement__button' onClick={() =>
-        handleBidWithWBC(`${minBidAmount}`, auctionID, minimumAllowableBid, owner)
+        bidWithWBC(`${minBidAmount}`, auctionID, owner)
       }>
         Bid Min Increment
       </button>
@@ -76,6 +75,7 @@ const BidOnNFT = ({
 }) => {
   const { 
     ETHEREUM_NULL_ADDRESS,
+    userWalletAddress 
   } = useEthers();
 
   const [bidAmount, setBidAmount] = useState('');
@@ -83,7 +83,7 @@ const BidOnNFT = ({
   const minimumAllowableBid = parseFloat(formattedCurrentBid) + parseFloat(formattedMinBidIncrement);
 
   const handleBidWithETH = (bidAmount, auctionID, minimumAllowableBid, owner) => {
-    bidWithETH(bidAmount, auctionID, minimumAllowableBid, owner);
+    bidWithETH(bidAmount, auctionID, minimumAllowableBid);
     setBidAmount('')
   }
 
@@ -100,7 +100,6 @@ const BidOnNFT = ({
     handleBidWithETH={handleBidWithETH} 
     auctionID={auctionID} 
     minimumAllowableBid={minimumAllowableBid} 
-    owner={owner}
     />;
   } else {
     return <BidWithWBC 
@@ -111,7 +110,7 @@ const BidOnNFT = ({
     handleBidWithWBC={handleBidWithWBC} 
     auctionID={auctionID} 
     minimumAllowableBid={minimumAllowableBid} 
-    owner={owner}
+    bidWithWBC={bidWithWBC} 
     />;
   }
 }

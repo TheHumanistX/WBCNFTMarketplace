@@ -79,6 +79,7 @@ const ViewAuctions = () => {
             formattedExpiration: new Date(currentAuction.expiration.toNumber() * 1000).toLocaleDateString()
               + " "
               + new Date(currentAuction.expiration.toNumber() * 1000).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+
             paymentContractAddress: currentAuction.paymentContract,
             tokenID: currentAuction.tokenID.toNumber(),
           }

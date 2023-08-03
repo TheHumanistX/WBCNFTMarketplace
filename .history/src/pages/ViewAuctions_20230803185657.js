@@ -76,9 +76,7 @@ const ViewAuctions = () => {
             formattedMinBidIncrement: ethers.utils.formatEther(currentAuction.minBidIncrement),
             formattedPriceSymbol: currentAuction.paymentContract === ETHEREUM_NULL_ADDRESS ? 'ETH' : 'WBC',
             formattedBeginDate: new Date(currentAuction.beginTime.toNumber() * 1000).toLocaleString(),
-            formattedExpiration: new Date(currentAuction.expiration.toNumber() * 1000).toLocaleDateString()
-              + " "
-              + new Date(currentAuction.expiration.toNumber() * 1000).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+            formattedExpiration: new Date(currentAuction.expiration.toNumber() * 1000).toLocaleString(),
             paymentContractAddress: currentAuction.paymentContract,
             tokenID: currentAuction.tokenID.toNumber(),
           }
@@ -102,30 +100,30 @@ const ViewAuctions = () => {
 
   }, [marketplaceContract, timerComplete, txConfirm, userWalletAddress]);
 
-  const bidWithWBC = async (bidAmount, auctionID, minimumAllowableBid, owner) => {
+  const bidWithWBC = async (bidAmount, auctionID, minimumAllowableBid) => {
     if (!await bidOnAuctionInputChecks(bidAmount, minimumAllowableBid, owner, userWalletAddress, setIsOpen, setModalText)) return;
 
     const weiBidAmount = ethers.utils.parseEther(bidAmount);
-
+    
     try {
       await spendWithWBC(auctionID, weiBidAmount, setTxConfirm, path);
     } catch (err) {
       setIsOpen(true);
-      setModalText(`Failed to bid with WBC. See console for more information.`);
+      setModalText(`Failed to bid with WBC. See console for more information.`);  
       console.error('Failed to bid with WBC: ', err);
     }
   }
 
-  const bidWithETH = async (bidAmount, auctionID, minimumAllowableBid, owner) => {
-    if (!await bidOnAuctionInputChecks(bidAmount, minimumAllowableBid, owner, userWalletAddress, setIsOpen, setModalText)) return;
-
+  const bidWithETH = async (bidAmount, auctionID, minimumAllowableBid) => {
+    if (!await bidOnAuctionInputChecks(bidAmount, minimumAllowableBid, setIsOpen, setModalText)) return;
+    
     const weiBidAmount = ethers.utils.parseEther(bidAmount, 'ether');
 
     try {
       await spendWithETH(auctionID, weiBidAmount, setTxConfirm, path);
     } catch (err) {
       setIsOpen(true);
-      setModalText(`Failed to bid with ETH. See console for more information.`);
+      setModalText(`Failed to bid with ETH. See console for more information.`);  
       console.error('Failed to bid with ETH: ', err.message);
     }
   }

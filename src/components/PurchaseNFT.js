@@ -7,9 +7,12 @@ const PurchaseNFT = ({
     price,
     listingID,
     paymentContractAddress,
+    owner
      }) => {
     
-    const { ETHEREUM_NULL_ADDRESS } = useEthers();
+    const { 
+      ETHEREUM_NULL_ADDRESS
+    } = useEthers();
     const { tokenSymbol } = useToken();
 
   return (
@@ -17,9 +20,9 @@ const PurchaseNFT = ({
       <button className='buynft__button' onClick={() =>
                 paymentContractAddress === ETHEREUM_NULL_ADDRESS
                   ?
-                  buyWithETH(price, listingID)
+                  buyWithETH(price, listingID, owner)
                   :
-                  buyWithWBC(price, listingID)}
+                  buyWithWBC(price, listingID, owner)}
               >
                 Buy with
                 {paymentContractAddress === ETHEREUM_NULL_ADDRESS

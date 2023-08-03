@@ -1,28 +1,29 @@
-import React, { useContext } from 'react'
-import { MarketplaceContext } from '../context/MarketplaceContext'
+import React from 'react'
+import { useEthers, useToken } from '../context'
 
-const ListedSales = ({ 
+const PurchaseNFT = ({ 
     buyWithETH,
     buyWithWBC,
     price,
     listingID,
-    tokenSymbol,
     paymentContractAddress,
+    owner
      }) => {
-
-    const { nftContract } = useContext(MarketplaceContext);
+    
+    const { ETHEREUM_NULL_ADDRESS } = useEthers();
+    const { tokenSymbol } = useToken();
 
   return (
     <div>
       <button className='buynft__button' onClick={() =>
-                paymentContractAddress === '0x0000000000000000000000000000000000000000'
+                paymentContractAddress === ETHEREUM_NULL_ADDRESS
                   ?
                   buyWithETH(price, listingID)
                   :
                   buyWithWBC(price, listingID)}
               >
                 Buy with
-                {paymentContractAddress === '0x0000000000000000000000000000000000000000'
+                {paymentContractAddress === ETHEREUM_NULL_ADDRESS
                   ?
                   ' ETH'
                   :
@@ -34,4 +35,4 @@ const ListedSales = ({
   )
 }
 
-export default ListedSales
+export default PurchaseNFT

@@ -1,16 +1,19 @@
-import React, { useContext } from 'react'
-import { MarketplaceContext } from '../context/MarketplaceContext'
+import React from 'react'
+import { useEthers, useToken } from '../context'
 
 const PurchaseNFT = ({ 
     buyWithETH,
     buyWithWBC,
     price,
     listingID,
-    tokenSymbol,
     paymentContractAddress,
+    owner
      }) => {
-
-    const { nftContract, ETHEREUM_NULL_ADDRESS } = useContext(MarketplaceContext);
+    
+    const { 
+      ETHEREUM_NULL_ADDRESS
+    } = useEthers();
+    const { tokenSymbol } = useToken();
 
   return (
     <div>

@@ -4,15 +4,13 @@ import { useLocation } from 'react-router-dom';
 import { useEthers, useMarketplace } from '../context';
 import { AlertModal, AuctionSalesManagementButton, ShowListedNFTs } from '../components'
 import { useCheckAuctionCollectSalesCancel, useSpendWithETH, useSpendWithWBC } from '../hooks';
-import { buyListingCheck } from '../utility';
 
 const BuyNFT = () => {
   const location = useLocation();
   const path = location.pathname;
 
   const {
-    ETHEREUM_NULL_ADDRESS,
-    userWalletAddress
+    ETHEREUM_NULL_ADDRESS
   } = useEthers();
 
   const {
@@ -91,7 +89,7 @@ const BuyNFT = () => {
   }, [marketplaceContract, txConfirm]);
 
   const buyWithWBC = async (listingPrice, listingID, owner) => {
-    if(!await buyListingCheck(owner, userWalletAddress, setIsOpen, setModalText)) return;
+    
     try {
       await spendWithWBC(listingID, listingPrice, setTxConfirm, path);
     } catch (err) {
@@ -100,9 +98,8 @@ const BuyNFT = () => {
       console.error('Failed to buy with WBC: ', err);
     }
   }
-  
+
   const buyWithETH = async (listingPrice, listingID, owner) => {
-    if(!await buyListingCheck(owner, userWalletAddress, setIsOpen, setModalText)) return;
     try {
       console.log('BuyNFT buyWithETH(), calling `await spendWithETH`: ')
       await spendWithETH(listingID, listingPrice, setTxConfirm, path);
