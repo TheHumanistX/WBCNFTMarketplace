@@ -10,7 +10,7 @@ const OwnedNFTs = ({
 }) => {
   return (
     <>
-      <span>You currently hold {ownedNFTs ? ownedNFTs.length : '0'} {ownedNFTs.length === 1 ? 'NFT' : 'NFTs' } from the {nftContractName ? nftContractName : ''} contract.</span>
+      <span>You currently hold {ownedNFTs ? ownedNFTs.length : '0'} NFTs from the {nftContractName ? nftContractName : ''} contract.</span>
       <div className='ownednft__owned-grid'>
         {!ownedNFTs ? (
           <p>Loading owned NFTs...</p>
