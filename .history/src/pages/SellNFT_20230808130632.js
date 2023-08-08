@@ -39,6 +39,12 @@ const SellNFT = () => {
     const priceInWei = ethers.utils.parseEther(price);
     const tokenId = listingDetails.tokenId;
 
+    if (isNaN(price) || price === '' || price <= 0) {
+      setIsOpen(true);
+      setModalText('Please enter a valid price amount.');
+      return;
+    }
+
     try {
       approval = await approveNFTTransfer(nftContract, marketplaceContractAddress, tokenId);
     } catch (err) {

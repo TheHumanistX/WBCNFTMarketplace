@@ -156,11 +156,6 @@ This is possibly a mislabeled folder as I kind of think (now) that `Pages` shoul
   - These are explained more in-depth below. Click the hook names to go to their respective descriptions.
 - In the `return()` method, we pass the `ownedNFTs` array to the [`OwnedNFTs`](#OwnedNFTs) component which will then handle the display of any nfts from the current specified collection that the user holds which they are free to auction off.
 - When an a new sale listing is submitted, it is handled through the `handleListNFTForSale` function in this Page.
-  - We run our checks.
-  - We try for our nft transfer `approval` to create a sale listing for the specific NFT.
-  - We then, assuming succesful `approval`, call the [`createNewListing`](#createNewListing) utility function to handle the creation of a new sale listing.
-- The [`AuctionSalesManagementButton`](#AuctionSalesManagementButton) component is implemented to display the button for the user to manage any active sales or expired/won auctions, if they exist. If they do not exist, the button is not displayed.
-- The [`AlertModal`](#alert-modal) component is implemented to display certain errors when necessary in a more presentable manner than the typical red screen error in the browser.
 
 
 ## CreateAuction
@@ -171,7 +166,7 @@ This is possibly a mislabeled folder as I kind of think (now) that `Pages` shoul
 - In the `return()` method, we pass the `ownedNFTs` array to the [`OwnedNFTs`](#OwnedNFTs) component which will then handle the display of any nfts from the current specified collection that the user holds which they are free to auction off.
 - When an auction creation is submitted, it is handled through the `handleCreateAuction` function in this Page.
   - We run our checks.
-  - We try for our nft transfer `approval` to create an auction for the specific NFT.
+  - We try for our transfer `approval` to create an auction for the specific NFT.
   - We then, assuming succesful `approval`, call the [`createNewAuction`](#createNewAuction) utility function to handle the creation of a new auction.
 - The [`AuctionSalesManagementButton`](#AuctionSalesManagementButton) component is implemented to display the button for the user to manage any active sales or expired/won auctions, if they exist. If they do not exist, the button is not displayed.
 - The [`AlertModal`](#alert-modal) component is implemented to display certain errors when necessary in a more presentable manner than the typical red screen error in the browser.
@@ -382,7 +377,7 @@ This is possibly a mislabeled folder as I kind of think (now) that `Pages` shoul
 ### <a id="createAuctionInputChecks"></a>`createAuctionInputChecks`
 
 - Another utility function to run a series of checks.
-- This function is for the creation of a new auction in the `handleCreateAuction` function in the [`CreateAuction`](#create_auction) Page.
+- This function is for the create of a new auction in the `handleCreateAuction` function in the [`CreateAuction`](#create_auction) Page.
 - The function checks that the `initialBidAmount` is a number and greater than zero.
 - The function checks that the minimum `bidIncrement` is a number and greater than zero.
 - The function checks that the `auctionBeginTime` and `auctionEndTime` are not empty form elements.
@@ -419,12 +414,6 @@ This is possibly a mislabeled folder as I kind of think (now) that `Pages` shoul
   - Basically, they now cannot accidentally create a new sale listing for the same nft because it is no longer displaying with the other NFTs that they can still sell.
   
 ### <a id="createNewSaleListingChecks"></a>`createNewSaleListingChecks`
-
-- A utility function to handle any necessary checks before listing an NFT for direct sale.
-- The check is implemented at the beginning of the `handleListNFTForSale` in the [`SellNFT`](#sell_nft) Page.
-- We check if the price input by the user at which the NFT will be listed is a number and also greater than 0.
-  - If any of these fail, we return `false`.
-  - Otherwise, we return `true`.
 
 ### <a id="ethSpend"></a>`ethSpend`
 

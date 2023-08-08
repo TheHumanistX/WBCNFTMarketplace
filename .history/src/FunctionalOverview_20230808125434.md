@@ -82,8 +82,6 @@ This is possibly a mislabeled folder as I kind of think (now) that `Pages` shoul
 - This is the page of the marketplace that lists any active auctions for users to potentially bid on. 
 
 
----------------------------------------
-
 # Breaking down the four transactional 'Pages' (BuyNFT, CreateAuction, SellNFT, ViewAuctions)
 
 ### `useLocation` is used in all four Pages to allow us to determine where in the web app we are. We can then set the exact path (i.e. `/buy_nft`, `/sell_nft`, `/create_auction`, `/view_auctions`) which we can then use for some conditional rendering.  Won't explain this over and over but you will see it throughout the code.
@@ -149,36 +147,10 @@ This is possibly a mislabeled folder as I kind of think (now) that `Pages` shoul
 - The [`AlertModal`](#alert-modal) component is implemented to display certain errors when necessary in a more presentable manner than the typical red screen error in the browser.
 - We have the `bidWithWBC` and `bidWithETH` functions which just handle bidding on an NFT auction with either the ERC-20 token or ETH native coin.
 
-## SellNFT
-
-- This page is used to display any nfts a user holds in their wallet from the currently specified collection that they can list for sale on the marketplace.
-- We utilize the custom hooks [`useCheckAuctionCollectSalesCancel`](#useCheckAuctionCollectSalesCancel) and [`useOwnedNFTs`](#useOwnedNFTs).
-  - These are explained more in-depth below. Click the hook names to go to their respective descriptions.
-- In the `return()` method, we pass the `ownedNFTs` array to the [`OwnedNFTs`](#OwnedNFTs) component which will then handle the display of any nfts from the current specified collection that the user holds which they are free to auction off.
-- When an a new sale listing is submitted, it is handled through the `handleListNFTForSale` function in this Page.
-  - We run our checks.
-  - We try for our nft transfer `approval` to create a sale listing for the specific NFT.
-  - We then, assuming succesful `approval`, call the [`createNewListing`](#createNewListing) utility function to handle the creation of a new sale listing.
-- The [`AuctionSalesManagementButton`](#AuctionSalesManagementButton) component is implemented to display the button for the user to manage any active sales or expired/won auctions, if they exist. If they do not exist, the button is not displayed.
-- The [`AlertModal`](#alert-modal) component is implemented to display certain errors when necessary in a more presentable manner than the typical red screen error in the browser.
-
-
 ## CreateAuction
 
 - This Page is used to display any nfts a user holds in their wallet from the currently specified collection that they can auction off on the marketplace.
-- We utilize the custom hooks [`useCheckAuctionCollectSalesCancel`](#useCheckAuctionCollectSalesCancel) and [`useOwnedNFTs`](#useOwnedNFTs).
-  - These are explained more in-depth below. Click the hook names to go to their respective descriptions.
-- In the `return()` method, we pass the `ownedNFTs` array to the [`OwnedNFTs`](#OwnedNFTs) component which will then handle the display of any nfts from the current specified collection that the user holds which they are free to auction off.
-- When an auction creation is submitted, it is handled through the `handleCreateAuction` function in this Page.
-  - We run our checks.
-  - We try for our nft transfer `approval` to create an auction for the specific NFT.
-  - We then, assuming succesful `approval`, call the [`createNewAuction`](#createNewAuction) utility function to handle the creation of a new auction.
-- The [`AuctionSalesManagementButton`](#AuctionSalesManagementButton) component is implemented to display the button for the user to manage any active sales or expired/won auctions, if they exist. If they do not exist, the button is not displayed.
-- The [`AlertModal`](#alert-modal) component is implemented to display certain errors when necessary in a more presentable manner than the typical red screen error in the browser.
-
-
-
----------------------------------------
+- We utilize the custom hooks [`useCheckAuctionCollectSalesCancel`](#useCheckAuctionCollectSalesCancel) and [`useOwnedNFTs`](#useOwnedNFTs)
 
 # Components
 
@@ -300,9 +272,6 @@ This is possibly a mislabeled folder as I kind of think (now) that `Pages` shoul
 - Component to display and countdown the remaining time in Days, Hours, Minutes, Seconds for any active auctions.
 - The `setTimerComplete` is another 'switch' variable.  When `timerComplete` changes from the previous value (true/false), it triggers a rerender of the page so that when an auction becomes expired or won after time runs out, the auction automatically no longer displays on the [`ViewAuctions`](#view_auctions) page.
 
-
----------------------------------------
-
 # Custom hooks
 
 ### <a id="useCheckAuctionCollectSalesCancel"></a>`useCheckAuctionCollectSalesCancel`
@@ -349,9 +318,6 @@ This is possibly a mislabeled folder as I kind of think (now) that `Pages` shoul
   - We then move on, assuming no errors, to call the [`tokenSpend`](#tokenSpend) utility function to create a new transaction using the ERC-20 token.
 - The hook returns the `spendWithWBC` function so that it can be used in one of the two possible parent components mentioned above.
 
-
----------------------------------------
-
 # Utility functions
 
 ### <a id="approveNFTTransfer"></a>`approveNFTTransfer`
@@ -382,7 +348,7 @@ This is possibly a mislabeled folder as I kind of think (now) that `Pages` shoul
 ### <a id="createAuctionInputChecks"></a>`createAuctionInputChecks`
 
 - Another utility function to run a series of checks.
-- This function is for the creation of a new auction in the `handleCreateAuction` function in the [`CreateAuction`](#create_auction) Page.
+- This function is for the create of a new auction in the `handleCreateAuction` function in the [`CreateAuction`](#create_auction) Page.
 - The function checks that the `initialBidAmount` is a number and greater than zero.
 - The function checks that the minimum `bidIncrement` is a number and greater than zero.
 - The function checks that the `auctionBeginTime` and `auctionEndTime` are not empty form elements.
@@ -418,14 +384,6 @@ This is possibly a mislabeled folder as I kind of think (now) that `Pages` shoul
 - Upon a successful sale listing creation, we `setTxConfirm` which is a state variable instantiated in [`SellNFT`](#sell_nft) that we pass to [`useOwnedNFTs`](#useOwnedNFTs). Inside that custom hook, the `useEffect` has `txConfirm` as a dependency, so when `txConfirm` is changed/updated, that `useEffect` will re-run which will then re-render the nfts owned by the user that are displayed on the [`SellNFT`](#sell_nft) Page. This will remove the nft (from display on the Page) for which they just created a direct listing. 
   - Basically, they now cannot accidentally create a new sale listing for the same nft because it is no longer displaying with the other NFTs that they can still sell.
   
-### <a id="createNewSaleListingChecks"></a>`createNewSaleListingChecks`
-
-- A utility function to handle any necessary checks before listing an NFT for direct sale.
-- The check is implemented at the beginning of the `handleListNFTForSale` in the [`SellNFT`](#sell_nft) Page.
-- We check if the price input by the user at which the NFT will be listed is a number and also greater than 0.
-  - If any of these fail, we return `false`.
-  - Otherwise, we return `true`.
-
 ### <a id="ethSpend"></a>`ethSpend`
 
 - This utility function is called inside the [`useSpendWithETH`](#useSpendWithETH) custom hook.

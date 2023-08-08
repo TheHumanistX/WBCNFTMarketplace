@@ -158,7 +158,7 @@ This is possibly a mislabeled folder as I kind of think (now) that `Pages` shoul
 - When an a new sale listing is submitted, it is handled through the `handleListNFTForSale` function in this Page.
   - We run our checks.
   - We try for our nft transfer `approval` to create a sale listing for the specific NFT.
-  - We then, assuming succesful `approval`, call the [`createNewListing`](#createNewListing) utility function to handle the creation of a new sale listing.
+  - We then, assuming succesful `approval`, call the [`createNewListing`](#createNewListing) utility function to handle the creation of a new auction.
 - The [`AuctionSalesManagementButton`](#AuctionSalesManagementButton) component is implemented to display the button for the user to manage any active sales or expired/won auctions, if they exist. If they do not exist, the button is not displayed.
 - The [`AlertModal`](#alert-modal) component is implemented to display certain errors when necessary in a more presentable manner than the typical red screen error in the browser.
 

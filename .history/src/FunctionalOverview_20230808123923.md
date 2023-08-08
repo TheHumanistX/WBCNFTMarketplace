@@ -82,8 +82,6 @@ This is possibly a mislabeled folder as I kind of think (now) that `Pages` shoul
 - This is the page of the marketplace that lists any active auctions for users to potentially bid on. 
 
 
----------------------------------------
-
 # Breaking down the four transactional 'Pages' (BuyNFT, CreateAuction, SellNFT, ViewAuctions)
 
 ### `useLocation` is used in all four Pages to allow us to determine where in the web app we are. We can then set the exact path (i.e. `/buy_nft`, `/sell_nft`, `/create_auction`, `/view_auctions`) which we can then use for some conditional rendering.  Won't explain this over and over but you will see it throughout the code.
@@ -96,7 +94,7 @@ This is possibly a mislabeled folder as I kind of think (now) that `Pages` shoul
   - These are explained more in-depth below. Click the hook names to go to their respective descriptions.
 - We have a `useEffect` that handles fetching and determine any current active listings.
   - We declare the `fetchListingStatuses` function.
-  - We fetch the ID of the last direct sale or auction to populate the variable `getLastListingID`.
+  - We fetch the ID of the last direct sale or auction.
   - We create an array `listingData`
     - `Promise.all` is used because we will possibly have multiple promises returning and we want to wait on all of them before we move forward.
     - The array is given a length equal to the `getLastListingID` variable.
@@ -105,7 +103,7 @@ This is possibly a mislabeled folder as I kind of think (now) that `Pages` shoul
     - We then create a new array `listingTypes` which is just the `listingData` object array filtered for only `listingType`s of 1, which is the direct sale listing type.
       - This is determined by referring to the `ItemType` ENUM in the marketplace contract.
         - 1: Direct Sale and 2: Auction
-    - We then create a new array `listingStatuses` amd map through the `listingTypes` array and check the status of each listing that is in that array. 
+    - We then map through the `listingTypes` array and check the status of each listing that is in that array. 
       - We again use `Promise.all` so we make sure we have gotten all promises back before moving forward.
     - We declare the `activeListings` array which is `listingTypes` array filtered only for statuses of 1, which is an active sale listing. This is also based on an ENUM in the marketplace contract.
     - We declare the `currentListings` object array. 
@@ -114,71 +112,10 @@ This is possibly a mislabeled folder as I kind of think (now) that `Pages` shoul
         - We call the `getListing` function from the marketplace contract using each listingID, which returns an object.
         - This new object is then pushed added to the `currentListings` array
     - We then `setLiveListings(currentListings)` to update the state variable `liveListings` with the current and updated direct sale listings.
-- We then map the `liveListings` array in the `return()` method and each listing is passed down to the [`ShowListedNFTs`](#ShowListedNFTs) component, which handles the display of each listed sale or auction.
-- The [`AuctionSalesManagementButton`](#AuctionSalesManagementButton) component is implemented to display the button for the user to manage any active sales or expired/won auctions, if they exist. If they do not exist, the button is not displayed.
-- The [`AlertModal`](#alert-modal) component is implemented to display certain errors when necessary in a more presentable manner than the typical red screen error in the browser.
-- We have the `buyWithWBC` and `buyWithETH` functions which just handle the purchasing of an NFT sale listing with either the ERC-20 token or ETH native coin.
-
-## ViewAuctions
-
-- This Page is used to display any NFTs that are currently listed as direct sales.
-- We utilize the custom hooks [`useCheckAuctionCollectSalesCancel`](#useCheckAuctionCollectSalesCancel), [`useSpendWithWBC`](#useSpendWithWBC), and [`useSpendWithETH`](#useSpendWithETH).
-  - These are explained more in-depth below. Click the hook names to go to their respective descriptions.
-- We have a `useEffect` that handles fetching and determine any current active listings.
-  - We declare the `fetchAuctionStatuses` function.
-  - We fetch the ID of the last direct sale or auction to populate the variable `getLastListingID`.
-  - We create an array `listingData`
-    - `Promise.all` is used because we will possibly have multiple promises returning and we want to wait on all of them before we move forward.
-    - The array is given a length equal to the `getLastListingID` variable.
-      - For example, if `getLastListingID` === 4, the array will have indexes `[0,1,2,3]`.
-    - We then map through the array and for each index, we return an object container the `listingID` (this also can be an `auctionID`) and the `listingType` (direct sale or auction).
-    - We then create a new array `listingTypes` which is just the `listingData` object array filtered for only `listingType`s of 2, which is the auction listing type.
-      - This is determined by referring to the `ItemType` ENUM in the marketplace contract.
-        - 1: Direct Sale and 2: Auction
-    - We then create a new array `auctionStatuses` amd map through the `listingTypes` array and check the status of each auction that is in that array. 
-      - We again use `Promise.all` so we make sure we have gotten all promises back before moving forward.
-    - We declare the `activeAuctions` array which is `listingTypes` array filtered only for statuses of 2, which is an active auction. This is also based on an ENUM in the marketplace contract.
-    - We declare the `currentAuctions` object array. 
-      - We want to wait until all promises are returned, so we use `Promise.all`
-      - We map `activeAuctions` array
-        - We call the `getAuction` function from the marketplace contract using each auctionID, which returns an object.
-        - This new object is then pushed added to the `currentAuctions` array
-    - We then `setLiveAuctions(currentAuctions)` to update the state variable `liveAuctions` with the current and updated auction listings.
-- We then map the `liveAuctions` array in the `return()` method and each auction is passed down to the [`ShowListedNFTs`](#ShowListedNFTs) component, which handles the display of each listed sale or auction.
-- The [`AuctionSalesManagementButton`](#AuctionSalesManagementButton) component is implemented to display the button for the user to manage any active sales or expired/won auctions, if they exist. If they do not exist, the button is not displayed.
-- The [`AlertModal`](#alert-modal) component is implemented to display certain errors when necessary in a more presentable manner than the typical red screen error in the browser.
-- We have the `bidWithWBC` and `bidWithETH` functions which just handle bidding on an NFT auction with either the ERC-20 token or ETH native coin.
-
-## SellNFT
-
-- This page is used to display any nfts a user holds in their wallet from the currently specified collection that they can list for sale on the marketplace.
-- We utilize the custom hooks [`useCheckAuctionCollectSalesCancel`](#useCheckAuctionCollectSalesCancel) and [`useOwnedNFTs`](#useOwnedNFTs).
-  - These are explained more in-depth below. Click the hook names to go to their respective descriptions.
-- In the `return()` method, we pass the `ownedNFTs` array to the [`OwnedNFTs`](#OwnedNFTs) component which will then handle the display of any nfts from the current specified collection that the user holds which they are free to auction off.
-- When an a new sale listing is submitted, it is handled through the `handleListNFTForSale` function in this Page.
-  - We run our checks.
-  - We try for our nft transfer `approval` to create a sale listing for the specific NFT.
-  - We then, assuming succesful `approval`, call the [`createNewListing`](#createNewListing) utility function to handle the creation of a new sale listing.
-- The [`AuctionSalesManagementButton`](#AuctionSalesManagementButton) component is implemented to display the button for the user to manage any active sales or expired/won auctions, if they exist. If they do not exist, the button is not displayed.
-- The [`AlertModal`](#alert-modal) component is implemented to display certain errors when necessary in a more presentable manner than the typical red screen error in the browser.
-
-
-## CreateAuction
-
-- This Page is used to display any nfts a user holds in their wallet from the currently specified collection that they can auction off on the marketplace.
-- We utilize the custom hooks [`useCheckAuctionCollectSalesCancel`](#useCheckAuctionCollectSalesCancel) and [`useOwnedNFTs`](#useOwnedNFTs).
-  - These are explained more in-depth below. Click the hook names to go to their respective descriptions.
-- In the `return()` method, we pass the `ownedNFTs` array to the [`OwnedNFTs`](#OwnedNFTs) component which will then handle the display of any nfts from the current specified collection that the user holds which they are free to auction off.
-- When an auction creation is submitted, it is handled through the `handleCreateAuction` function in this Page.
-  - We run our checks.
-  - We try for our nft transfer `approval` to create an auction for the specific NFT.
-  - We then, assuming succesful `approval`, call the [`createNewAuction`](#createNewAuction) utility function to handle the creation of a new auction.
-- The [`AuctionSalesManagementButton`](#AuctionSalesManagementButton) component is implemented to display the button for the user to manage any active sales or expired/won auctions, if they exist. If they do not exist, the button is not displayed.
-- The [`AlertModal`](#alert-modal) component is implemented to display certain errors when necessary in a more presentable manner than the typical red screen error in the browser.
-
-
-
----------------------------------------
+  - We then map the `liveListings` array in the `return()` method and each listing is passed down to the [`ShowListedNFTs`](#ShowListedNFTs) component, which handles the display of each listed sale or auction.
+  - The [`AuctionSalesManagementButton`](#AuctionSalesManagementButton) component is implemented to display the button for the user to manage any active sales or expired/won auctions, if they exist. If they do not exist, the button is not displayed.
+  - The [`AlertModal`](#alert-modal) component is implemented to display certain errors when necessary in a more presentable manner than the typical red screen error in the browser.
+  - We have the `buyWithWBC` and `buyWithETH` functions which just handle the purchasing of an NFT sale listing with either the ERC-20 token or ETH native coin.
 
 # Components
 
@@ -300,9 +237,6 @@ This is possibly a mislabeled folder as I kind of think (now) that `Pages` shoul
 - Component to display and countdown the remaining time in Days, Hours, Minutes, Seconds for any active auctions.
 - The `setTimerComplete` is another 'switch' variable.  When `timerComplete` changes from the previous value (true/false), it triggers a rerender of the page so that when an auction becomes expired or won after time runs out, the auction automatically no longer displays on the [`ViewAuctions`](#view_auctions) page.
 
-
----------------------------------------
-
 # Custom hooks
 
 ### <a id="useCheckAuctionCollectSalesCancel"></a>`useCheckAuctionCollectSalesCancel`
@@ -349,9 +283,6 @@ This is possibly a mislabeled folder as I kind of think (now) that `Pages` shoul
   - We then move on, assuming no errors, to call the [`tokenSpend`](#tokenSpend) utility function to create a new transaction using the ERC-20 token.
 - The hook returns the `spendWithWBC` function so that it can be used in one of the two possible parent components mentioned above.
 
-
----------------------------------------
-
 # Utility functions
 
 ### <a id="approveNFTTransfer"></a>`approveNFTTransfer`
@@ -382,7 +313,7 @@ This is possibly a mislabeled folder as I kind of think (now) that `Pages` shoul
 ### <a id="createAuctionInputChecks"></a>`createAuctionInputChecks`
 
 - Another utility function to run a series of checks.
-- This function is for the creation of a new auction in the `handleCreateAuction` function in the [`CreateAuction`](#create_auction) Page.
+- This function is for the create of a new auction in the `handleCreateAuction` function in the [`CreateAuction`](#create_auction) Page.
 - The function checks that the `initialBidAmount` is a number and greater than zero.
 - The function checks that the minimum `bidIncrement` is a number and greater than zero.
 - The function checks that the `auctionBeginTime` and `auctionEndTime` are not empty form elements.
@@ -418,14 +349,6 @@ This is possibly a mislabeled folder as I kind of think (now) that `Pages` shoul
 - Upon a successful sale listing creation, we `setTxConfirm` which is a state variable instantiated in [`SellNFT`](#sell_nft) that we pass to [`useOwnedNFTs`](#useOwnedNFTs). Inside that custom hook, the `useEffect` has `txConfirm` as a dependency, so when `txConfirm` is changed/updated, that `useEffect` will re-run which will then re-render the nfts owned by the user that are displayed on the [`SellNFT`](#sell_nft) Page. This will remove the nft (from display on the Page) for which they just created a direct listing. 
   - Basically, they now cannot accidentally create a new sale listing for the same nft because it is no longer displaying with the other NFTs that they can still sell.
   
-### <a id="createNewSaleListingChecks"></a>`createNewSaleListingChecks`
-
-- A utility function to handle any necessary checks before listing an NFT for direct sale.
-- The check is implemented at the beginning of the `handleListNFTForSale` in the [`SellNFT`](#sell_nft) Page.
-- We check if the price input by the user at which the NFT will be listed is a number and also greater than 0.
-  - If any of these fail, we return `false`.
-  - Otherwise, we return `true`.
-
 ### <a id="ethSpend"></a>`ethSpend`
 
 - This utility function is called inside the [`useSpendWithETH`](#useSpendWithETH) custom hook.

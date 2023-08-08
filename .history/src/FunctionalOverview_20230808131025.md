@@ -156,11 +156,6 @@ This is possibly a mislabeled folder as I kind of think (now) that `Pages` shoul
   - These are explained more in-depth below. Click the hook names to go to their respective descriptions.
 - In the `return()` method, we pass the `ownedNFTs` array to the [`OwnedNFTs`](#OwnedNFTs) component which will then handle the display of any nfts from the current specified collection that the user holds which they are free to auction off.
 - When an a new sale listing is submitted, it is handled through the `handleListNFTForSale` function in this Page.
-  - We run our checks.
-  - We try for our nft transfer `approval` to create a sale listing for the specific NFT.
-  - We then, assuming succesful `approval`, call the [`createNewListing`](#createNewListing) utility function to handle the creation of a new sale listing.
-- The [`AuctionSalesManagementButton`](#AuctionSalesManagementButton) component is implemented to display the button for the user to manage any active sales or expired/won auctions, if they exist. If they do not exist, the button is not displayed.
-- The [`AlertModal`](#alert-modal) component is implemented to display certain errors when necessary in a more presentable manner than the typical red screen error in the browser.
 
 
 ## CreateAuction
@@ -171,7 +166,7 @@ This is possibly a mislabeled folder as I kind of think (now) that `Pages` shoul
 - In the `return()` method, we pass the `ownedNFTs` array to the [`OwnedNFTs`](#OwnedNFTs) component which will then handle the display of any nfts from the current specified collection that the user holds which they are free to auction off.
 - When an auction creation is submitted, it is handled through the `handleCreateAuction` function in this Page.
   - We run our checks.
-  - We try for our nft transfer `approval` to create an auction for the specific NFT.
+  - We try for our transfer `approval` to create an auction for the specific NFT.
   - We then, assuming succesful `approval`, call the [`createNewAuction`](#createNewAuction) utility function to handle the creation of a new auction.
 - The [`AuctionSalesManagementButton`](#AuctionSalesManagementButton) component is implemented to display the button for the user to manage any active sales or expired/won auctions, if they exist. If they do not exist, the button is not displayed.
 - The [`AlertModal`](#alert-modal) component is implemented to display certain errors when necessary in a more presentable manner than the typical red screen error in the browser.
