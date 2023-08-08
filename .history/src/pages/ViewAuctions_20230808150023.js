@@ -3,13 +3,15 @@ import { ethers } from 'ethers'
 import { useLocation } from 'react-router-dom';
 import { useEthers, useMarketplace } from '../context';
 import { AlertModal, AuctionSalesManagementButton, ShowListedNFTs } from '../components'
-import { buyListingCheck } from '../utility';
+import { bidOnAuctionInputChecks } from '../utility';
 import { useCheckAuctionCollectSalesCancel, useFetchListings, useSpendWithETH, useSpendWithWBC } from '../hooks';
 
-const BuyNFT = () => {
+const ViewAuctions = () => {
   const location = useLocation();
   const path = location.pathname;
 
+
+  // Import necessary context data for this component
   const {
     ETHEREUM_NULL_ADDRESS,
     userWalletAddress
@@ -24,32 +26,38 @@ const BuyNFT = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [modalText, setModalText] = useState('');
   const [displayButton, setDisplayButton] = useState(false);
+  const [timerComplete, setTimerComplete] = useState(false);
 
   const { activeSales, expiredAuctions, wonAuctions } = useCheckAuctionCollectSalesCancel(setDisplayButton, setIsOpen, setModalText);
   const { spendWithWBC } = useSpendWithWBC({ setIsOpen, setModalText });
   const { spendWithETH } = useSpendWithETH({ setIsOpen, setModalText });
-  const liveListings = useFetchListings(1, 1); 
-  
-  const buyWithWBC = async (listingPrice, listingID, owner) => {
-    if(!await buyListingCheck(owner, userWalletAddress, setIsOpen, setModalText)) return;
+  const liveAuctions = useFetchListings(marketplaceContract, 2, 2);
+
+  const bidWithWBC = async (bidAmount, auctionID, minimumAllowableBid, owner) => {
+    if (!await bidOnAuctionInputChecks(bidAmount, minimumAllowableBid, owner, userWalletAddress, setIsOpen, setModalText)) return;
+
+    const weiBidAmount = ethers.utils.parseEther(bidAmount);
+
     try {
-      await spendWithWBC(listingID, listingPrice, setTxConfirm, path);
+      await spendWithWBC(auctionID, weiBidAmount, setTxConfirm, path);
     } catch (err) {
       setIsOpen(true);
-      setModalText(`Failed to buy with WBC. See console for more information.`);
-      console.error('Failed to buy with WBC: ', err);
+      setModalText(`Failed to bid with WBC. See console for more information.`);
+      console.error('Failed to bid with WBC: ', err);
     }
   }
-  
-  const buyWithETH = async (listingPrice, listingID, owner) => {
-    if(!await buyListingCheck(owner, userWalletAddress, setIsOpen, setModalText)) return;
+
+  const bidWithETH = async (bidAmount, auctionID, minimumAllowableBid, owner) => {
+    if (!await bidOnAuctionInputChecks(bidAmount, minimumAllowableBid, owner, userWalletAddress, setIsOpen, setModalText)) return;
+
+    const weiBidAmount = ethers.utils.parseEther(bidAmount, 'ether');
+
     try {
-      console.log('BuyNFT buyWithETH(), calling `await spendWithETH`: ')
-      await spendWithETH(listingID, listingPrice, setTxConfirm, path);
+      await spendWithETH(auctionID, weiBidAmount, setTxConfirm, path);
     } catch (err) {
       setIsOpen(true);
-      setModalText(`Failed to buy with ETH. See console for more information.`);
-      console.error('Failed to buy with ETH: ', err.message);
+      setModalText(`Failed to bid with ETH. See console for more information.`);
+      console.error('Failed to bid with ETH: ', err.message);
     }
   }
 
@@ -63,17 +71,12 @@ const BuyNFT = () => {
           setDisplayButton={setDisplayButton}
         />
       )}
-      <h1>Buy An NFT!</h1>
+      <h1>Bid On An NFT!</h1>
       <div className='buy__owned-flex'>
-        {liveListings && liveListings.map((listing, index) => {
+        {liveAuctions && liveAuctions.map((auction, index) => {
           return (
             <div key={index}>
-              <ShowListedNFTs
-                listing={listing}
-                marketplaceContract={marketplaceContract}
-                buyWithETH={buyWithETH}
-                buyWithWBC={buyWithWBC}
-              />
+              <ShowListedNFTs listing={auction} marketplaceContract={marketplaceContract} bidWithETH={bidWithETH} bidWithWBC={bidWithWBC} timerComplete={timerComplete} setTimerComplete={setTimerComplete} />
             </div>
           )
         }
@@ -86,4 +89,4 @@ const BuyNFT = () => {
   )
 }
 
-export default BuyNFT
+export default ViewAuctions

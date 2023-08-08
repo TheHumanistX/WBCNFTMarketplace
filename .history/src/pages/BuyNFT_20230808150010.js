@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { ethers } from 'ethers'
 import { useLocation } from 'react-router-dom';
 import { useEthers, useMarketplace } from '../context';
@@ -28,7 +28,7 @@ const BuyNFT = () => {
   const { activeSales, expiredAuctions, wonAuctions } = useCheckAuctionCollectSalesCancel(setDisplayButton, setIsOpen, setModalText);
   const { spendWithWBC } = useSpendWithWBC({ setIsOpen, setModalText });
   const { spendWithETH } = useSpendWithETH({ setIsOpen, setModalText });
-  const liveListings = useFetchListings(1, 1); 
+  const liveListings = useFetchListings(marketplaceContract, 1, 1); 
   
   const buyWithWBC = async (listingPrice, listingID, owner) => {
     if(!await buyListingCheck(owner, userWalletAddress, setIsOpen, setModalText)) return;

@@ -94,7 +94,7 @@ This is possibly a mislabeled folder as I kind of think (now) that `Pages` shoul
 - This Page is used to display any NFTs that are currently listed as direct sales.
 - We utilize the custom hooks [`useCheckAuctionCollectSalesCancel`](#useCheckAuctionCollectSalesCancel), [`useFetchListings`](#useFetchListings), [`useSpendWithWBC`](#useSpendWithWBC), and [`useSpendWithETH`](#useSpendWithETH).
   - These are explained more in-depth below. Click the hook names to go to their respective descriptions.
-- We declare the `liveListings` array which contains any data passed back from the [`useFetchListings`](#useFetchListings) custom hook.
+- 
 - We then map the `liveListings` array in the `return()` method and each listing is passed down to the [`ShowListedNFTs`](#ShowListedNFTs) component, which handles the display of each listed sale or auction.
 - The [`AuctionSalesManagementButton`](#AuctionSalesManagementButton) component is implemented to display the button for the user to manage any active sales or expired/won auctions, if they exist. If they do not exist, the button is not displayed.
 - The [`AlertModal`](#alert-modal) component is implemented to display certain errors when necessary in a more presentable manner than the typical red screen error in the browser.
@@ -105,7 +105,7 @@ This is possibly a mislabeled folder as I kind of think (now) that `Pages` shoul
 - This Page is used to display any NFTs that are currently listed as direct sales.
 - We utilize the custom hooks [`useCheckAuctionCollectSalesCancel`](#useCheckAuctionCollectSalesCancel), [`useFetchListings`](#useFetchListings), [`useSpendWithWBC`](#useSpendWithWBC), and [`useSpendWithETH`](#useSpendWithETH).
   - These are explained more in-depth below. Click the hook names to go to their respective descriptions.
-- We declare the `liveAuctions` array which contains any data passed back from the [`useFetchListings`](#useFetchListings) custom hook.
+- 
 - We then map the `liveAuctions` array in the `return()` method and each auction is passed down to the [`ShowListedNFTs`](#ShowListedNFTs) component, which handles the display of each listed sale or auction.
 - The [`AuctionSalesManagementButton`](#AuctionSalesManagementButton) component is implemented to display the button for the user to manage any active sales or expired/won auctions, if they exist. If they do not exist, the button is not displayed.
 - The [`AlertModal`](#alert-modal) component is implemented to display certain errors when necessary in a more presentable manner than the typical red screen error in the browser.

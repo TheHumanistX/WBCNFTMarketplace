@@ -1,7 +1,7 @@
 export const createNewSaleListingChecks = (listingDetails, setIsOpen, setModalText) => {
     if (isNaN(listingDetails.price) || listingDetails.price === '' || listingDetails.price <= 0) {
         setIsOpen(true);
-        setModalText('Please enter a valid price.');
+        setModalText('Please enter a valid initial bid amount.');
         // setCreateAuctionCheckFailed(true);
         return false;
     }

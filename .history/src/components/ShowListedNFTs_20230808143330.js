@@ -56,7 +56,7 @@ const ShowListedNFTs = ({
     } = useNFT();
     const { tokenSymbol } = useToken();
     const currentListing = useListing(listing);
-    console.log('ShowListedNFTs currentListing: ', currentListing)
+    console.log('ShowListedNFTs currentListing: ', currentListing')
     const listingOwner = currentListing.owner.slice(0, 6) + '...' + currentListing.owner.slice(-4);
     useEffect(() => {
         setNFTContractAddress(currentListing.nftContractAddress);

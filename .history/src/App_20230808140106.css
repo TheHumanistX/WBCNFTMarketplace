@@ -621,13 +621,13 @@ header {
   display: flex;
   justify-content: center;
   align-items: center;
-  top: -1.5vh;
+  top: -1vh;
   right: -1vw;
   height: 35px;
   width: 35px;
   cursor: pointer;
   border: 5px solid #5142FC;
-  border-radius: 3px;
+  border-radius: 5px;
   background-color: #141414;
 }
 

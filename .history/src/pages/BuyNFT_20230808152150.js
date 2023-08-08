@@ -28,7 +28,7 @@ const BuyNFT = () => {
   const { activeSales, expiredAuctions, wonAuctions } = useCheckAuctionCollectSalesCancel(setDisplayButton, setIsOpen, setModalText);
   const { spendWithWBC } = useSpendWithWBC({ setIsOpen, setModalText });
   const { spendWithETH } = useSpendWithETH({ setIsOpen, setModalText });
-  const liveListings = useFetchListings(1, 1); 
+  const { liveListings } = useFetchListings(1, 1); 
   
   const buyWithWBC = async (listingPrice, listingID, owner) => {
     if(!await buyListingCheck(owner, userWalletAddress, setIsOpen, setModalText)) return;

@@ -7,7 +7,7 @@ import { useFetchNftData, useListing } from '../hooks/';
 
 
 const NFTImage = ({ path, currentListing, nftData, nftContractName }) => (
-    
+    console.log('ShowListedNFTs currenListing: ', currentListing)
     <div className='nft-listing__image'>
         <span>
             {path === '/buy_nft' ? "Listing" : "Auction"} ID: {path === '/buy_nft' ? currentListing.listingID + 1 : currentListing.auctionID + 1}
@@ -44,7 +44,7 @@ const ShowListedNFTs = ({
     timerComplete,
     setTimerComplete
 }) => {
-    console.log('ShowListedNFTs listing: ', listing)
+
     const location = useLocation();
     const path = location.pathname;
     const { ETHEREUM_NULL_ADDRESS } = useEthers();
@@ -56,7 +56,6 @@ const ShowListedNFTs = ({
     } = useNFT();
     const { tokenSymbol } = useToken();
     const currentListing = useListing(listing);
-    console.log('ShowListedNFTs currentListing: ', currentListing)
     const listingOwner = currentListing.owner.slice(0, 6) + '...' + currentListing.owner.slice(-4);
     useEffect(() => {
         setNFTContractAddress(currentListing.nftContractAddress);

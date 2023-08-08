@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { ethers } from 'ethers'
 import { useLocation } from 'react-router-dom';
 import { useEthers, useMarketplace } from '../context';
@@ -22,6 +22,7 @@ const ViewAuctions = () => {
   } = useMarketplace();
 
   // Initialize state variables
+  // const [liveAuctions, setLiveAuctions] = useState([]);
   const [txConfirm, setTxConfirm] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
   const [modalText, setModalText] = useState('');
@@ -31,7 +32,78 @@ const ViewAuctions = () => {
   const { activeSales, expiredAuctions, wonAuctions } = useCheckAuctionCollectSalesCancel(setDisplayButton, setIsOpen, setModalText);
   const { spendWithWBC } = useSpendWithWBC({ setIsOpen, setModalText });
   const { spendWithETH } = useSpendWithETH({ setIsOpen, setModalText });
-  const { liveAuctions } = useFetchListings(2, 2);
+  const liveAuctions = useFetchListings(marketplaceContract, 2, 2);
+
+  // useEffect(() => {
+  //   const fetchAuctionStatuses = async () => {
+
+  //     if (!marketplaceContract) return;
+      
+  //     try {
+  //       let getLastListingID = await marketplaceContract.idCounter();
+  //       getLastListingID = getLastListingID.toNumber();
+
+  //       const listingData = await Promise.all(
+  //         Array.from({ length: getLastListingID }, (_, i) => i).map(async (listingID) => {
+  //           const listingType = await marketplaceContract.getItemType(listingID)
+  //           return {
+  //             listingID: listingID,
+  //             listingType: listingType
+  //           };
+  //         })
+  //       );
+
+  //       const listingTypes = listingData.filter(listing => listing.listingType === 2);
+
+  //       const auctionStatuses = await Promise.all(
+  //         listingTypes.map((listing) =>
+  //           marketplaceContract.getAuctionStatus(listing.listingID)
+  //         )
+  //       );
+
+  //       const activeAuctions = listingTypes.filter(
+  //         (listing, i) => auctionStatuses[i] === 2
+  //       );
+
+  //       const currentAuctions = await Promise.all(activeAuctions.map(async (auction) => {
+  //         const currentAuction = await marketplaceContract.getAuction(auction.listingID)
+  //         return {
+  //           auctionID: auction.listingID,
+  //           nftContractAddress: currentAuction.nftContract,
+  //           owner: currentAuction.owner,
+  //           currentBid: currentAuction.currentBid,
+  //           minBidIncrement: currentAuction.minBidIncrement,
+  //           beginDate: currentAuction.beginTime,
+  //           expiration: currentAuction.expiration,
+  //           formattedCurrentBid: ethers.utils.formatEther(currentAuction.currentBid),
+  //           formattedMinBidIncrement: ethers.utils.formatEther(currentAuction.minBidIncrement),
+  //           formattedPriceSymbol: currentAuction.paymentContract === ETHEREUM_NULL_ADDRESS ? 'ETH' : 'WBC',
+  //           formattedBeginDate: new Date(currentAuction.beginTime.toNumber() * 1000).toLocaleString(),
+  //           formattedExpiration: new Date(currentAuction.expiration.toNumber() * 1000).toLocaleDateString()
+  //             + " "
+  //             + new Date(currentAuction.expiration.toNumber() * 1000).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+  //           paymentContractAddress: currentAuction.paymentContract,
+  //           tokenID: currentAuction.tokenID.toNumber(),
+  //         }
+  //       }));
+
+
+  //       setLiveAuctions(currentAuctions);
+
+  //     } catch (err) {
+  //       if (err.code === 'NETWORK_ERROR') {
+  //         setIsOpen(true);
+  //         setModalText(`Network Changed. Please switch network back to Goerli Test Network.`);
+  //         console.error('A network error has occurred: ', err.message)
+  //       } else {
+  //         console.error('An error has occurred: ', err.message)
+  //       }
+  //     }
+  //   }
+
+  //   fetchAuctionStatuses();
+
+  // }, [marketplaceContract, timerComplete, txConfirm, userWalletAddress]);
 
   const bidWithWBC = async (bidAmount, auctionID, minimumAllowableBid, owner) => {
     if (!await bidOnAuctionInputChecks(bidAmount, minimumAllowableBid, owner, userWalletAddress, setIsOpen, setModalText)) return;

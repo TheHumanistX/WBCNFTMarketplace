@@ -621,7 +621,7 @@ header {
   display: flex;
   justify-content: center;
   align-items: center;
-  top: -1.5vh;
+  top: 0vh;
   right: -1vw;
   height: 35px;
   width: 35px;
